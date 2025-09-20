@@ -2,10 +2,9 @@
   "name": "js-problem-solving",
   "version": "1.0.0",
   "description": "Problem solving using javascript",
-  "main": "index.js",
+  "author": "Sandip Deb",
+  "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Sandip Deb",
-  "license": "ISC"
+  }
 }
