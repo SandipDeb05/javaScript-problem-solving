@@ -1,0 +1,1879 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS Problems</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { color: #333; }
+    hr { margin: 30px 0; }
+    pre { background: #f5f5f5; padding: 10px; border: 1px solid #ddd; }
+    p { line-height: 1.6; }
+    code { background: #eee; padding: 2px 4px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Problems</h1>
+  <hr/>
+<p><strong>Question 1:</strong></p>
+<p>In this challenge, your task is to create a custom implementation of the <code>JSON.stringify()</code> method, which we&#8217;ll call <code>myStringify</code>. The <code>JSON.stringify()</code> method in JavaScript is used to convert JavaScript objects or values to a JSON string. However, for the sake of this exercise, you&#8217;ll be building your own version to deepen your understanding of how data serialization works in JavaScript.</p>
+<p>Your function should be able to handle the following data types:</p>
+<ul>
+<li>Primitive types: Number, String, Boolean, null</li>
+<li>Complex types: Objects, Arrays</li>
+</ul>
+<p>Note that unlike the native <code>JSON.stringify()</code>, your function does not need to worry about circular references, functions, or symbols.</p>
+<p>Here are some examples to illustrate what your function should do:</p>
+<pre><code>
+Input: ['foo', 'bar']
+Output: '["foo", "bar"]'
+
+Input: { name: 'John', age: 30, isEmployed: true }
+Output: '{"name": "John", "age": 30, "isEmployed": true}'
+
+Input: 42
+Output: '42'
+
+Input: 'Hello, world!'
+Output: '"Hello, world!"'
+
+Input: true
+Output: 'true'
+
+Input: null
+Output: 'null'
+</code></pre>
+<p>Your implementation should correctly convert arrays and objects to their string representations, ensuring to wrap string values in double quotes and separate object properties with commas. Pay close attention to handling edge cases, such as empty objects or arrays.</p>
+
+<hr/>
+<p><strong>Question 2:</strong></p>
+<p>Implement an asynchronous function <code>retryApiCall</code> that attempts to call a given API function and retries a specified number of times if the call fails or does not return a successful response (status code 200). The function should wait for a given interval between retries.</p>
+<p>The function should accept the following parameters:</p>
+<ul>
+<li><code>apiFunction</code>: A function that makes the API call and returns a promise.</li>
+<li><code>maxRetries</code>: The maximum number of retries allowed.</li>
+<li><code>retryInterval</code>: The interval (in milliseconds) to wait between retries.</li>
+</ul>
+<p><strong>Function Signature:</strong></p>
+<pre><code>async function retryApiCall(apiFunction: () => Promise<any>, maxRetries: number, retryInterval: number): Promise<any></code></pre>
+<p><strong>Example Usage:</strong></p>
+<pre><code>const fetchData = async () => {
+    // Simulated API call
+    return fetch('https://example.com/data');
+};
+
+retryApiCall(fetchData, 3, 1000)
+    .then(response => console.log('Data:', response))
+    .catch(error => console.error('Failed to fetch data:', error));</code></pre>
+<p>Ensure that the function correctly handles retries, waiting the specified interval between attempts, and throws an error if the maximum number of retries is reached without a successful response.</p>
+
+<hr/>
+<p><strong>Question 3:</strong></p>
+<p>Create a <code>FeatureFlag</code> class that manages feature flags in a web application. Feature flags are a powerful technique in software development, allowing developers to enable or disable certain features dynamically, often used for testing new features, A/B testing, or enabling features for specific users or environments.</p>
+<p>The <code>FeatureFlag</code> class should provide the functionality to check if specific features are enabled or disabled based on stored flags. It should also include a method to retrieve feature flags from local storage, simulating the fetching of feature configurations from a persistent storage or a remote configuration service.</p>
+<p><strong>Class Requirements:</strong></p>
+<ul>
+<li>A constructor that initializes the feature flags.</li>
+<li>A private method <code>_fetchFeatures</code> that simulates fetching feature flags from local storage and populates the <code>features</code> object.</li>
+<li>A method <code>isEnabled</code> that accepts an array of feature names and returns an array of objects indicating the enabled status of each feature.</li>
+<li>An optional method <code>useFeatureFlag</code> similar to <code>isEnabled</code>, demonstrating alternative naming or functionality as desired.</li>
+</ul>
+<p><strong>Example Usage:</strong></p>
+<pre><code>const featureFlag = new FeatureFlag();
+console.log(featureFlag.isEnabled(['feature', 'feature2']));
+// Output: [{feature: true}, {feature2: false}]</code></pre>
+<p>The class should handle cases where local storage might not be accessible due to browser restrictions or privacy settings, defaulting to an empty configuration in such cases.</p>
+
+<hr/>
+<p><strong>Question 4:</strong></p>
+<p>Create a function <code>mySqrt</code> that computes and returns the square root of a given number <code>x</code>. The function should return the integer part of the square root, similar to how the built-in <code>Math.sqrt</code> function works, but without using it directly. Your implementation should use a binary search algorithm to efficiently find the square root.</p>
+<p>Additionally, your function should handle edge cases such as negative numbers, non-numeric inputs, and <code>NaN</code> by returning <code>NaN</code>.</p>
+<p><strong>Function Signature:</strong></p>
+<pre><code>function mySqrt(x: number): number</code></pre>
+<p><strong>Example Usage:</strong></p>
+<pre><code>console.log(mySqrt(4));  // Output: 2
+console.log(mySqrt(8));  // Output: 2 (since the square root of 8 is approximately 2.82842..., and the function returns the integer part)</code></pre>
+<p>The input <code>x</code> is guaranteed to be a non-negative number. The function should aim for an efficient solution, ideally with a time complexity of O(log n).</p>
+
+<hr/>
+<p><strong>Question 5:</strong></p>
+<p>Implement a function <code>romanToInteger</code> that converts a Roman numeral string to an integer. Roman numerals are represented by seven different symbols: <code>I</code>, <code>V</code>, <code>X</code>, <code>L</code>, <code>C</code>, <code>D</code> and <code>M</code>.</p>
+<p>The rules for Roman numeral conversion are as follows:</p>
+<ul>
+<li><code>I</code> can be placed before <code>V</code> (5) and <code>X</code> (10) to make 4 and 9.</li>
+<li><code>X</code> can be placed before <code>L</code> (50) and <code>C</code> (100) to make 40 and 90.</li>
+<li><code>C</code> can be placed before <code>D</code> (500) and <code>M</code> (1000) to make 400 and 900.</li>
+</ul>
+<p><strong>Function Signature:</strong></p>
+<pre><code>function romanToInteger(str: string): number</code></pre>
+<p><strong>Example Usage:</strong></p>
+<pre><code>const result = romanToInteger("MCMXCIV");
+console.log(result);  // Output: 1994</code></pre>
+<p>Your solution should handle strings representing Roman numerals in the range from 1 to 3999. The input string is guaranteed to be a valid Roman numeral up to 3999.</p>
+
+<hr/>
+<p><strong>Question 6:</strong></p>
+<p>Suppose you have <code>n</code> versions of a product, and you want to find the first version that introduced a bug, causing all the following versions to also be bad. Given a function <code>isBad</code> that takes a version number and returns <code>true</code> if the version is bad and <code>false</code> otherwise, implement a function <code>firstBadVersion</code> that utilizes a binary search algorithm to efficiently find and return the first bad version.</p>
+<p>Your function should minimize the number of calls to the <code>isBad</code> function. Implement <code>firstBadVersion</code> such that it returns a closure which accepts a single integer parameter <code>version</code>, representing the total number of versions, and returns the first bad version number, or <code>-1</code> if no bad version is found.</p>
+<p><strong>Function Signature:</strong></p>
+<pre><code>function firstBadVersion(isBad: (version: number) => boolean): (version: number) => number</code></pre>
+<p><strong>Example Usage:</strong></p>
+<pre><code>const isBad = (version) => version >= 4;
+const findFirstBad = firstBadVersion(isBad);
+console.log(findFirstBad(5));  // Output: 4</code></pre>
+<p>This problem tests your ability to apply binary search in a practical scenario, optimizing for efficiency in terms of time complexity and minimizing the use of resources such as network or database calls.</p>
+
+<hr/>
+<p><strong>Question 7:</strong></p>
+<p>Create a function <code>getTextBetweenTwoNodes</code> that retrieves all the text content found in the DOM between two specified nodes, <code>node1</code> and <code>node2</code>. The function should traverse the DOM tree, collecting text from text nodes that are located between these two nodes, and return an array of these text snippets.</p>
+<p>The function should consider a depth-first search approach to navigate through the DOM elements, ensuring that all text nodes between the two specified nodes are included. It&#8217;s important to handle various edge cases, such as when the nodes are nested at different levels or when there&#8217;s no direct sibling relationship between them.</p>
+<p><strong>Function Signature:</strong></p>
+<pre><code>function getTextBetweenTwoNodes(node1: Node, node2: Node): string[]</code></pre>
+<p><strong>Example Usage:</strong></p>
+<pre><code>const node1 = document.getElementById('start');
+const node2 = document.getElementById('end');
+const textsBetween = getTextBetweenTwoNodes(node1, node2);
+console.log(textsBetween);  // Output: Array of text snippets between node1 and node2</code></pre>
+<p>This utility can be particularly useful for web scraping, automated testing, or any scenario where understanding the text content between two DOM elements is required.</p>
+
+<hr/>
+<p><strong>Question 8:</strong></p>
+<p>Create a <code>FakeTimer</code> class that can be used to replace the native JavaScript timing functions (<code>setTimeout</code>, <code>clearTimeout</code>, and <code>Date.now</code>) with a controllable fake version. This allows for the simulation and testing of time-dependent code without the need for actual time to elapse, making it ideal for tests and simulations where precise timing control is required.</p>
+<p>The <code>FakeTimer</code> class should provide the following functionalities:</p>
+<ul>
+<li><strong>Install:</strong> Replace the native timing functions with fake ones that queue callbacks instead of executing them after a real delay.</li>
+<li><strong>Uninstall:</strong> Restore the original timing functions to their native implementations.</li>
+<li><strong>Tick:</strong> Manually advance the fake timer, executing any callbacks that should be triggered up to the current simulated time.</li>
+</ul>
+<p><strong>Usage Example:</strong></p>
+<pre><code>const timer = new FakeTimer();
+timer.install();
+// Schedule a timeout
+const id = setTimeout(() => console.log('Timeout called'), 100);
+// Advance the fake timer
+timer.tick();
+// 'Timeout called' is logged to the console
+timer.uninstall();  // Restore original functions</code></pre>
+<p>This feature is particularly useful in unit testing, where real-time waiting is impractical. It allows for precise control over the execution timing of callbacks, enabling more deterministic and faster tests.</p>
+
+<hr/>
+<p><strong>Question 9:</strong></p>
+<p>Implement a function that enhances a given API call function by merging identical calls and caching their responses to optimize network usage. This approach should prevent multiple identical requests from being sent to the server simultaneously, reducing unnecessary network traffic and load on the server.</p>
+<p>The function, <code>createGetAPIWithMerging</code>, takes an API call function <code>getAPI</code> as an argument and returns a new function. This new function behaves like <code>getAPI</code> but with added capabilities:</p>
+<ul>
+<li>Merging identical API calls made within a short timeframe.</li>
+<li>Caching the responses of these calls to serve future identical requests without contacting the server.</li>
+<li>Limiting the cache size to maintain only the most recent responses, thus managing memory usage effectively.</li>
+</ul>
+<p><strong>Usage Example:</strong></p>
+<pre><code>const mergedGetAPI = createGetAPIWithMerging(getAPI);
+const response1 = await mergedGetAPI('/data', { params: { id: 123 } });
+const response2 = await mergedGetAPI('/data', { params: { id: 123 } });  // This call will be merged with the first one if made within 1 second.
+</code></pre>
+<p>Here, <code>getAPI</code> is the original function for making GET requests. <code>createGetAPIWithMerging</code> enhances it by caching and merging, ensuring that if multiple identical requests are made in rapid succession, only one will be sent to the server, and its response will be used for all of them.</p>
+<p>The cache is automatically managed to contain only a limited number of recent responses and to expire entries after a short period, ensuring the data&#8217;s freshness and limiting memory usage.</p>
+
+<hr/>
+<p><strong>Question 10:</strong></p>
+<p>Given an array of items and a corresponding array of new index positions, write a function to reorder the items array according to the new index positions provided. Your function should mutate the original items array to reflect the new order.</p>
+<p>This challenge tests your understanding of array manipulation and sorting algorithms. It&#8217;s a common task in frontend development, especially when dealing with dynamic user interfaces where elements might need reordering based on user actions or other criteria.</p>
+<p><strong>Example:</strong></p>
+<pre><code>Input: items = ["a", "b", "c", "d", "e"], newOrder = [3, 0, 4, 1, 2]
+Output: items becomes ["b", "d", "e", "a", "c"]</code></pre>
+<p>The function should take two arguments:</p>
+<ul>
+<li><code>items</code>: An array of elements that need to be reordered.</li>
+<li><code>newOrder</code>: An array of integers representing the new index positions for each corresponding element in the <code>items</code> array.</li>
+</ul>
+<p>The goal is to mutate the <code>items</code> array such that each element is moved to its new index as specified by the <code>newOrder</code> array. Ensure your solution accounts for the possibility of various data types within the <code>items</code> array and handles edge cases gracefully.</p>
+
+<hr/>
+<p><strong>Question 11:</strong></p>
+<p>The given problem involves understanding and explaining a JavaScript function that dynamically generates a navigation menu based on a nested data structure. The data, represented in a JavaScript array of objects, outlines a hierarchical structure of navigation items, where each item can have a name and potentially a list of child items, denoting sub-navigation menus.</p>
+<p>The primary challenge is to traverse this nested data structure and create an HTML navigation menu that reflects the hierarchical relationships. This involves creating <code>&lt;ul&gt;</code> elements for each level of the hierarchy, <code>&lt;li&gt;</code> elements for each navigation item, and nesting them appropriately according to their parent-child relationships in the data.</p>
+<p>The JavaScript function <code>renderNav</code> takes this navigation data as input and renders the corresponding HTML structure within a specified context, which by default is <code>document.body</code>. The function uses recursion to handle nested data, allowing it to generate menus at any depth.</p>
+<p>For example, given a simplified version of the navigation data:</p>
+<pre><code>[
+  {
+    "name": "Home",
+    "children": [
+      {
+        "name": "About",
+        "children": [
+          {"name": "Team", "children": []},
+          {"name": "History", "children": []}
+        ]
+      }
+    ]
+  },
+  {"name": "Services", "children": []}
+]</code></pre>
+<p>The function would produce an HTML structure similar to:</p>
+<pre><code>&lt;ul&gt;
+  &lt;li&gt;Home
+    &lt;ul&gt;
+      &lt;li&gt;About
+        &lt;ul&gt;
+          &lt;li&gt;Team&lt;/li&gt;
+          &lt;li&gt;History&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Services&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+<p>This task evaluates your ability to work with DOM manipulation, recursion, and data structures in JavaScript, which are essential skills for frontend development.</p>
+
+<hr/>
+<p><strong>Question 12:</strong></p>
+<p><img loading="lazy" decoding="async" class="alignnone size-full wp-image-403" src="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-4.33.20-PM.png" alt="" width="234" height="294" /></p>
+<p>You are provided with a React application designed to manage and display a list of customer transactions. The primary functionalities of this application include:</p>
+<ul>
+<li><strong>Rendering the Transaction List:</strong> Displaying an initial list of transactions to the user, each containing an ID, the customer&#8217;s name, and the transaction amount.</li>
+<li><strong>Filtering Transactions:</strong> Allowing users to filter the transaction list by customer name through a text input field. The list updates in real-time based on the user&#8217;s input, showing transactions that match the entered name (case-insensitively).</li>
+<li><strong>Highlighting Top Customer&#8217;s Transactions:</strong> Identifying the customer with the highest total transaction amount across all their transactions. The application highlights transactions associated with this top customer in the list, making them easily distinguishable.</li>
+</ul>
+<p>These features aim to enhance user experience by providing a clear and interactive way to manage and understand transaction data. Users can easily locate transactions for specific customers, and quickly identify which customer has the highest total transaction amount, thanks to the visual highlights applied to their transactions.</p>
+<p><strong>Implementation Example:</strong></p>
+<pre><code>
+const transactions = [
+  { id: "t_101", customer: "Alice Anderson", amount: 84 },
+  { id: "t_102", customer: "Bob Brown", amount: 30 },
+  // Additional transactions...
+];
+
+function TransactionsList({ transactions }) {
+  // Component logic...
+  return (
+    &lt;div&gt;
+      &lt;input type="text" onChange={/* Filter logic */} /&gt;
+      &lt;ul&gt;
+        {transactions.map(transaction =&gt; (
+          &lt;li key={transaction.id}&gt;
+            &lt;span style={{ backgroundColor: /* Highlighting logic */ }}&gt;
+              {transaction.customer}
+            &lt;/span&gt;
+            : {transaction.amount}
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>This code snippet illustrates the basic structure and functionality of the React application, highlighting the key areas of rendering, filtering, and visual distinction of transactions. The actual logic for filtering and highlighting will depend on the user input and the aggregated transaction amounts per customer.</p>
+
+<hr/>
+<p><strong>Question 13:</strong></p>
+<p><img loading="lazy" decoding="async" class="alignnone size-medium wp-image-388" src="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-3.42.59-PM-300x195.png" alt="" width="300" height="195" srcset="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-3.42.59-PM-300x195.png 300w, https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-3.42.59-PM-768x499.png 768w, https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-3.42.59-PM.png 776w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+<p>Create a dynamic Masonry layout using Vanilla JavaScript, which organizes a series of items into a grid layout that optimizes space by fitting elements in the optimal position based on available vertical space. This layout should resemble the way stones are laid in a masonry wall, where each item is placed in the shortest column available at the time of placement, creating a staggered effect rather than a uniform grid.</p>
+<p>Your task is to implement a function that positions each item within a container to achieve the Masonry layout effect. Each item has its own content and height, and the layout should consist of a specified number of columns with a fixed gap between items. The items should be arranged such that they fill up the shortest column available, ensuring that the layout is balanced and the overall height of the grid is minimized.</p>
+<p>The implementation should include the following:</p>
+<ul>
+<li>A function to create a new DOM element for each item, setting its class, text content, width, and height.</li>
+<li>A function to calculate the position of each item and append it to the container, ensuring items are placed in the shortest column to achieve the Masonry effect.</li>
+<li>Consideration for the number of columns and the gap between items, dynamically adjusting the layout based on the container&#8217;s width.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code>const items = [
+    { content: 'Item 1', height: 150 },
+    { content: 'Item 2', height: 100 },
+    { content: 'Item 3', height: 120 },
+    // more items...
+];
+
+// Expected to create a Masonry layout with the given items inside a container with an id of 'masonry'.
+</code></pre>
+<p>This task assesses your ability to manipulate the DOM using Vanilla JavaScript, handle dynamic layout calculations, and apply creative problem-solving to achieve complex layout patterns without external libraries.</p>
+
+<hr/>
+<p><strong>Question 14:</strong></p>
+<p><img loading="lazy" decoding="async" src="https://api.frontendlead.com/wp-content/uploads/2024/03/Screen-Shot-2023-10-02-at-5.10.24-PM-300x290.png" alt="" width="300" height="290" class="alignnone size-medium wp-image-383" srcset="https://api.frontendlead.com/wp-content/uploads/2024/03/Screen-Shot-2023-10-02-at-5.10.24-PM-300x290.png 300w, https://api.frontendlead.com/wp-content/uploads/2024/03/Screen-Shot-2023-10-02-at-5.10.24-PM.png 532w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+<p>Develop a basic React user interface that accomplishes the following tasks:</p>
+<ul>
+<li>Fetches data from an external API.</li>
+<li>Renders a header image using the first item from the API&#8217;s response.</li>
+<li>Displays a list of results, each with a title and a button.</li>
+<li>Includes a search input field to filter through the list items based on the title.</li>
+<li>Allows users to update the main header image by clicking a button associated with each list item.</li>
+</ul>
+<p>This UI challenge focuses on implementing core React functionalities, including state management with <code>useState</code>, side effects with <code>useEffect</code>, componentization, and event handling. Styling is not a primary concern for this task, but the functionality to filter results and update the main image based on user interaction is crucial.</p>
+<p><strong>Example Interaction:</strong></p>
+<pre><code>1. Upon loading, the UI fetches data from the API and displays the first image as the main header image.
+2. A list of titles is displayed below the header image, each with a corresponding "Click Me" button.
+3. The user can type in the search field to filter the list of titles.
+4. Clicking on a "Click Me" button next to a title updates the header image to that of the clicked item's image.</code></pre>
+<p>This task assesses your ability to handle data fetching, state management, and dynamic rendering in React, which are essential skills for frontend development.</p>
+
+<hr/>
+<p><strong>Question 15:</strong></p>
+<p><img loading="lazy" decoding="async" class="alignnone size-medium wp-image-380" src="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-3.18.45-PM-300x261.png" alt="" width="300" height="261" srcset="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-3.18.45-PM-300x261.png 300w, https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-3.18.45-PM.png 596w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+<p>The objective is to develop a tabbed UI component that allows users to interactively switch between different tabs. Each tab should display specific content associated with it, and only the content of the active tab should be visible at any time. The component should be styled and functional, providing an intuitive user experience.</p>
+<p>Each tab&#8217;s visibility is controlled by React state, allowing for dynamic rendering of tab content based on user interaction.</p>
+
+<hr/>
+<p><strong>Question 16:</strong></p>
+<p><img loading="lazy" decoding="async" class="alignnone size-medium wp-image-376" src="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-3.02.18-PM-300x147.png" alt="" width="300" height="147" srcset="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-3.02.18-PM-300x147.png 300w, https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-3.02.18-PM.png 644w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+<p>Create a simple image slider component in React to display a set of product images fetched from an API. The slider should enable users to navigate through the images using &#8220;Next&#8221; and &#8220;Previous&#8221; buttons, allowing for smooth transitions between them.</p>
+<p><strong>Input Examples:</strong></p>
+<ul>
+<li>Initial render with fetched product images.</li>
+<li>Clicking the &#8220;Next&#8221; button to move to the next image.</li>
+<li>Clicking the &#8220;Previous&#8221; button to move to the previous image.</li>
+</ul>
+<p><strong>Expected Output Examples:</strong></p>
+<ul>
+<li>Display a set of product images in a slider format.</li>
+<li>Transition smoothly to the next image when clicking &#8220;Next&#8221;.</li>
+<li>Transition smoothly to the previous image when clicking &#8220;Previous&#8221;.</li>
+</ul>
+<p>The implementation should handle fetching product images from an external API, managing the current image index, and enabling smooth transitions between images within the React application.</p>
+
+<hr/>
+<p><strong>Question 17:</strong></p>
+<p><img loading="lazy" decoding="async" class="alignnone size-full wp-image-370" src="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-2.44.10-PM.png" alt="" width="200" height="216" /></p>
+<p>You are tasked with building a Tic-Tac-Toe game in React. The game allows two players to take turns marking squares on a 3&#215;3 grid. The objective is to be the first player to place three of their marks in a horizontal, vertical, or diagonal row to win the game. Implement the game logic, handle player turns, and declare a winner appropriately.</p>
+<p>Input Examples:</p>
+<ul>
+<li>Player X clicks on square 0: <code>['X', null, null, null, null, null, null, null, null]</code></li>
+<li>Player O clicks on square 4: <code>['X', null, null, null, 'O', null, null, null, null]</code></li>
+<li>Player X wins: <code>['X', null, null, null, 'O', null, 'X', null, null]</code></li>
+</ul>
+<p>Expected Output Examples:</p>
+<ul>
+<li>Display <strong>&#8220;Next Player: X&#8221;</strong> when it&#8217;s Player X&#8217;s turn.</li>
+<li>Display <strong>&#8220;Next Player: O&#8221;</strong> when it&#8217;s Player O&#8217;s turn.</li>
+<li>Display <strong>&#8220;Winner: X&#8221;</strong> when Player X wins.</li>
+</ul>
+<p>This game requires understanding React state management to track the game board and current player, implementing game logic to determine the winner, and rendering the UI based on the game&#8217;s state.</p>
+
+<hr/>
+<p><strong>Question 18:</strong></p>
+<p><img loading="lazy" decoding="async" src="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-2.34.32-PM-262x300.png" alt="" width="262" height="300" class="alignnone size-medium wp-image-363" srcset="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-2.34.32-PM-262x300.png 262w, https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-2.34.32-PM.png 632w" sizes="(max-width: 262px) 100vw, 262px" /></p>
+<p>In this React-based problem, we are tasked with managing a nested directory structure where each directory can be either opened to reveal its subdirectories or closed to hide them. Additionally, users must be able to add new files to any directory within this structure.</p>
+<p>The core functionalities required for this application include:</p>
+<ul>
+<li>Being able to toggle a directory&#8217;s state between open and closed, thereby controlling the visibility of its subdirectories.</li>
+<li>Adding new files to directories. Each new file should be displayed in the directory&#8217;s list of files once added.</li>
+</ul>
+<p>To illustrate, consider the following scenarios:</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Expected Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Closing a directory</td>
+<td>Its subdirectories should be hidden.</td>
+</tr>
+<tr>
+<td>Opening a directory</td>
+<td>Its subdirectories should be revealed.</td>
+</tr>
+<tr>
+<td>Adding a new file to a directory</td>
+<td>The file should appear in the directory&#8217;s list of files.</td>
+</tr>
+</tbody>
+</table>
+<p>This challenge involves a combination of state management, event handling, and dynamic rendering in React, making it a comprehensive task for testing one&#8217;s understanding of React fundamentals, especially in the context of handling complex, nested structures.</p>
+
+<hr/>
+<p><strong>Question 19:</strong></p>
+<p>Implement a JavaScript solution to manage checkboxes in a hierarchical structure, ensuring the following functionality:</p>
+<ul>
+<li>When a parent checkbox is checked, all its child checkboxes should also be checked.</li>
+<li>When a parent checkbox is unchecked, all its child checkboxes should be unchecked.</li>
+<li>If some, but not all, child checkboxes are checked, the parent checkbox should be in an indeterminate state.</li>
+</ul>
+<p>This problem presents a common scenario in user interfaces where options are nested within categories and subcategories, requiring a coherent and intuitive interaction pattern. The hierarchical structure of checkboxes can represent various real-world scenarios such as selecting features in a product, permissions in a software application, or categories in a content management system.</p>
+<p>For example, consider the following HTML structure:</p>
+<pre><code>&lt;h1&gt;Indeterminate Checkboxes&lt;/h1&gt;
+&lt;ul&gt;
+    &lt;li&gt;
+        &lt;input type="checkbox" name="tall" id="tall"&gt;
+        &lt;label for="tall"&gt;Tall Things&lt;/label&gt;
+        &lt;ul&gt;
+            &lt;li&gt;
+                &lt;input type="checkbox" name="tall-1" id="tall-1"&gt;
+                &lt;label for="tall-1"&gt;Buildings&lt;/label&gt;
+            &lt;/li&gt;
+            &lt;li&gt;
+                &lt;input type="checkbox" name="tall-2" id="tall-2"&gt;
+                &lt;label for="tall-2"&gt;Giants&lt;/label&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;
+                        &lt;input type="checkbox" name="tall-2-1" id="tall-2-1"&gt;
+                        &lt;label for="tall-2-1"&gt;Andre&lt;/label&gt;
+                    &lt;/li&gt;
+                    &lt;li&gt;
+                        &lt;input type="checkbox" name="tall-2-2" id="tall-2-2"&gt;
+                        &lt;label for="tall-2-2"&gt;Paul Bunyan&lt;/label&gt;
+                    &lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/li&gt;
+            ...
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    ...
+&lt;/ul&gt;</code></pre>
+<p>In this structure, selecting &#8220;Tall Things&#8221; should automatically select &#8220;Buildings,&#8221; &#8220;Giants,&#8221; and all nested options under &#8220;Giants.&#8221; Conversely, deselecting any child option should update the parent&#8217;s state to reflect that not all children are selected, thus showing the parent in an indeterminate state.</p>
+<p>This challenge requires a thoughtful approach to event handling and DOM traversal, ensuring that the state of each checkbox is accurately reflected throughout the hierarchy. As you work through this problem, consider the implications of each interaction, aiming for a solution that is both efficient and intuitive for the user.</p>
+
+<hr/>
+<p><strong>Question 20:</strong></p>
+<p><img loading="lazy" decoding="async" class="alignnone size-medium wp-image-348" src="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-1.49.33-PM-300x208.png" alt="" width="300" height="208" srcset="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-1.49.33-PM-300x208.png 300w, https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-1.49.33-PM-768x534.png 768w, https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-16-at-1.49.33-PM.png 924w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+<p>You have been tasked with creating a Facebook-like newsfeed that displays user-generated content with infinite scrolling. The application should fetch user data from a mock API endpoint and display it in a feed. As users scroll down the feed, more content should be dynamically loaded, ensuring a seamless user experience.</p>
+<p>Endpoint: https://dummyjson.com/users?limit=10&amp;skip=1</p>
+<p><strong>Functional Requirements:</strong></p>
+<ul>
+<li>The feed should initially load a set number of posts.</li>
+<li>As the user scrolls to the bottom of the feed, more posts should be loaded dynamically.</li>
+<li>The application should handle cases where no more data is available to load.</li>
+</ul>
+<p><strong>Input/Output Examples:</strong></p>
+<ul>
+<li><strong>Input:</strong> Initial load of the page<br />
+<strong>Expected Output:</strong> Displays the first set of user-generated content along with a loader element.</li>
+<li><strong>Input:</strong> Scroll to the bottom of the feed<br />
+<strong>Expected Output:</strong> Removes the loader element and appends more user-generated content to the feed.</li>
+<li><strong>Input:</strong> Scroll to the bottom of the feed again<br />
+<strong>Expected Output:</strong> Continues appending additional user-generated content to the feed.</li>
+</ul>
+
+<hr/>
+<p><strong>Question 21:</strong></p>
+<p><img loading="lazy" decoding="async" src="https://api.frontendlead.com/wp-content/uploads/2024/03/Screen-Shot-2023-08-20-at-5.38.01-PM-283x300.png" alt="" width="283" height="300" class="alignnone size-medium wp-image-340" srcset="https://api.frontendlead.com/wp-content/uploads/2024/03/Screen-Shot-2023-08-20-at-5.38.01-PM-283x300.png 283w, https://api.frontendlead.com/wp-content/uploads/2024/03/Screen-Shot-2023-08-20-at-5.38.01-PM.png 477w" sizes="(max-width: 283px) 100vw, 283px" /></p>
+<p>Develop an autocomplete search suggestion feature that dynamically displays search suggestions to users as they type in a search query. This feature fetches search results from an API endpoint and displays them as suggestions in real-time. Selected results are displayed separately, enhancing user experience and interaction.</p>
+<p>The functionality is akin to what you might find in popular search engines, where suggestions appear as you type, based on the current input. This not only makes the search process more efficient but also provides users with a glimpse of what information is available even before they complete typing their query.</p>
+<p><strong>Input Examples:</strong></p>
+<ul>
+<li>User types: &#8220;ph&#8221; <br />Expected Output: Display a list of search suggestions related to &#8220;phone.&#8221;</li>
+<li>User types: &#8220;lap&#8221; <br />Expected Output: Display a list of search suggestions related to &#8220;laptop.&#8221;</li>
+<li>User types: &#8220;app&#8221; <br />Expected Output: Display a list of search suggestions related to &#8220;apparel.&#8221;</li>
+</ul>
+<p>This task involves handling user input in real-time, querying an API for search results based on this input, and then displaying these results as clickable suggestions. When a user selects a suggestion, it should be displayed separately to indicate selection.</p>
+<p>Please use <code>https://dummyjson.com/products/search?q=yourkeyword</code> endpoint to fetch results</p>
+<p>The completion of this feature involves understanding and handling asynchronous operations, DOM manipulation, and event handling in JavaScript. It is a practical and commonly implemented feature in many web applications, making it an essential skill for frontend developers.</p>
+
+<hr/>
+<p><strong>Question 22:</strong></p>
+<p>You&#8217;ve been tasked with building a basic ToDo app using HTML, CSS, and JavaScript. The goal of this project is to create a functional todo list that allows users to add, remove, complete, and update tasks. This exercise focuses on enhancing your skills with DOM manipulation, event handling, and dynamic content generation in Vanilla JavaScript.</p>
+<p>The application&#8217;s UI is already set up with HTML and CSS. Your main task is to implement the JavaScript functionality to bring the ToDo app to life. Here are the key features your app should support:</p>
+<ul>
+<li><strong>Adding a ToDo Item:</strong> Users should be able to type in a task and add it to the list by submitting the form. The new task should appear at the top of the list.</li>
+<li><strong>Removing a ToDo Item:</strong> Each task should have an associated &#8216;Delete&#8217; button. Clicking this button should remove the task from the list.</li>
+<li><strong>Completing a ToDo Item:</strong> Each task should also have a &#8216;Complete&#8217; button. When clicked, the task should be visually marked as completed (e.g., strikethrough text).</li>
+<li><strong>Updating a ToDo Item:</strong> Tasks should be editable. An &#8216;Update&#8217; button should toggle the task between an editable state and a view state. Users can change the task text and save the changes.</li>
+</ul>
+<p><strong>Example:</strong> Below is a visual and functional description of the app&#8217;s intended behavior.</p>
+<pre><code>&lt;!-- Initial State --&gt;
+&lt;div id="container"&gt;
+  &lt;div class="wrapper"&gt;
+    &lt;h1&gt;ToDo App&lt;/h1&gt;
+    &lt;form action="#" class="addtodo-form"&gt;
+      &lt;input class="input-todo" type="text" placeholder="Write your todo..."&gt;
+      &lt;input type="submit" value="Add Todo"&gt;
+    &lt;/form&gt;
+    &lt;br/&gt;&lt;br/&gt;
+    &lt;h2&gt;Items to be done&lt;/h2&gt;
+    &lt;br/&gt;----&lt;br/&gt;
+    &lt;ul&gt;
+      &lt;div class="no-todos"&gt;No Todos Available Yet&lt;/div&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- After Adding a New Task 'Task 1' --&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;div class="text"&gt;Task 1&lt;/div&gt;
+    &lt;input class="hidden" type="text" value="Task 1"&gt;
+    &lt;div class="buttons"&gt;
+        &lt;button class="update green"&gt;Update&lt;/button&gt;
+        &lt;button class="delete"&gt;X&lt;/button&gt;
+        &lt;button class="done"&gt;Complete&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;div class="no-todos hidden"&gt;No Todos Available Yet&lt;/div&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>This project is an excellent opportunity to practice and showcase your ability to work with core web technologies and implement basic but crucial functionalities that are common in many web applications.</p>
+
+<hr/>
+<p><strong>Question 23:</strong></p>
+<article>
+<section>
+<p>Implement an autocomplete feature that enhances user experience by suggesting possible completions for a search term as it is being typed into an HTML input field. This functionality should dynamically filter and display a list of suggestions based on the current input value, offering keyboard navigation to select from the filtered results.</p>
+</section>
+<section>
+<h2>Task Overview</h2>
+<p>Your task is to write a JavaScript function that integrates with an HTML input field, monitoring the user&#8217;s input. As the user types, the function should interact with a predefined endpoint (simulated by an object in this case) that returns a list of potential matches. These matches should then be displayed as a list of suggestions beneath the input field, updating in real time with each keystroke to reflect the current query.</p>
+</section>
+<section>
+<h2>Features and Behavior</h2>
+<ul>
+<li>The autocomplete should dynamically filter search results to include only items matching the current input, disregarding case sensitivity.</li>
+<li>The displayed results should update as the user types, with each keystroke refining the list of suggestions.</li>
+<li>Keyboard navigation (e.g., using the arrow keys) should allow the user to browse through the list of suggestions and select a result to fill in the search field.</li>
+<li>Each suggestion in the list should be selectable, and clicking on a suggestion or pressing &#8216;Enter&#8217; when highlighted should populate the input field with that value.</li>
+</ul>
+</section>
+<section>
+<h2>Example</h2>
+<p>Consider an input field where a user starts typing &#8220;Al&#8221;. The autocomplete feature should filter the list of names to show only those that contain &#8220;Al&#8221;, such as &#8220;Alex&#8221; and &#8220;Aleksandra&#8221;, beneath the input field as selectable suggestions.</p>
+</section>
+</article>
+
+<hr/>
+<p><strong>Question 24:</strong></p>
+<p><img loading="lazy" decoding="async" class="alignnone size-medium wp-image-299" src="https://api.frontendlead.com/wp-content/uploads/2024/03/Screen-Shot-2023-05-15-at-6.38.31-PM-300x118.png" alt="" width="300" height="118" srcset="https://api.frontendlead.com/wp-content/uploads/2024/03/Screen-Shot-2023-05-15-at-6.38.31-PM-300x118.png 300w, https://api.frontendlead.com/wp-content/uploads/2024/03/Screen-Shot-2023-05-15-at-6.38.31-PM.png 527w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+<p>You are given an array of numbers. Your task is to write a function <code>buildHistogram()</code> that generates a histogram based on the occurrences of each unique number in the array. The histogram should visually represent the frequency of each number with vertical bars, displaying the count on the left axis.</p>
+<p>This challenge involves:</p>
+<ul>
+<li>Counting the occurrences of each unique number in the given array.</li>
+<li>Building a histogram where each bar represents the frequency of a unique number.</li>
+<li>Displaying the frequency on the left axis of the histogram.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code>Input: [2, 4, 5, 2, 3, 4]
+Histogram:
+4 |      ##
+3 |     ####
+2 |    ######
+1 |   ########
+    ---------
+     2  3  4  5
+</code></pre>
+<p>Your implementation should dynamically generate the histogram based on the input array, accommodating arrays with varying lengths and ranges of numbers. Consider the visualization aspect of the histogram, ensuring that the bars are proportional and accurately reflect the data&#8217;s distribution.</p>
+
+<hr/>
+<p><strong>Question 25:</strong></p>
+<p>You are tasked with implementing an <strong>Intersection Observer</strong>, a utility commonly used in frontend development to detect when an element enters or exits the viewport. Your goal is to create a class that can observe multiple elements on a webpage and trigger a callback function when these elements intersect or stop intersecting with the viewport.</p>
+<p>The Intersection Observer you will create should be capable of handling multiple elements simultaneously, monitoring their presence within the viewport. This feature is crucial for implementing lazy loading of images, infinite scrolling, and animations based on scroll position, enhancing user experience and performance.</p>
+<p>To illustrate, consider a webpage with multiple sections that become visible only as the user scrolls. Your Intersection Observer should be able to detect when each section comes into view and trigger a specified callback function, allowing for dynamic content loading or animations.</p>
+<p>Here is a basic example of how your Intersection Observer might be initialized and used:</p>
+<pre><code>const observer = new MyIntersectionObserver((entries) =&gt; {
+  entries.forEach(entry =&gt; {
+    if (entry.isIntersecting) {
+      console.log(entry.target, 'has entered the viewport');
+    } else {
+      console.log(entry.target, 'has exited the viewport');
+    }
+  });
+});
+
+// Assuming `section1` and `section2` are DOM elements you wish to observe
+observer.observe(section1);
+observer.observe(section2);
+</code></pre>
+<p>This implementation should efficiently manage and track the elements, ensuring that the callback function is invoked appropriately as elements enter and leave the viewport. Consider the implications of scroll events, element visibility, and the efficient use of resources in your solution.</p>
+
+<hr/>
+<p><strong>Question 26:</strong></p>
+<p>Implement a function <code>getElementsByClassName</code> that mimics the behavior of the native DOM method <code>document.getElementsByClassName</code>. The function should search through a DOM tree starting from a specified root element and collect all elements that have the specified class name.</p>
+<p>The function <code>getElementsByClassName(className, root)</code> takes two parameters: <code>className</code>, which is the name of the class to search for, and <code>root</code>, which is the root element of the DOM subtree in which to begin the search. If the root element is not provided, the search should not proceed.</p>
+<p>The function should return an array of DOM elements that match the specified class name. If no elements are found, the function should return an empty array. The search should include the root element and should be performed depth-first, ensuring that all descendants of the root are considered.</p>
+<p><strong>Example:</strong></p>
+<pre><code>
+// Assuming an HTML structure like:
+// &lt;div class="container"&gt;
+//   &lt;div class="item active"&gt;&lt;/div&gt;
+//   &lt;div class="item"&gt;&lt;/div&gt;
+//   &lt;div class="list"&gt;
+//     &lt;div class="item active"&gt;&lt;/div&gt;
+//   &lt;/div&gt;
+// &lt;/div&gt;
+
+const rootElement = document.querySelector('.container');
+const itemsWithActiveClass = getElementsByClassName('active', rootElement);
+
+// itemsWithActiveClass should contain the two '.item.active' divs
+</code></pre>
+<p>This task requires traversing the DOM tree and applying conditional logic to select elements based on their class name, which is a common requirement in many frontend development tasks. Implementing this function will deepen your understanding of DOM manipulation and element selection.</p>
+
+<hr/>
+<p><strong>Question 27:</strong></p>
+<p>The <code>classnames</code> utility function is a powerful tool in frontend development, used to dynamically construct a string of CSS class names based on certain conditions. This function simplifies the process of conditionally adding classes to HTML elements, making the code more readable and maintainable.</p>
+<p>Your task is to implement the <code>classnames</code> function in JavaScript. This function should accept any number of arguments, where each argument can be a class name or a condition that determines whether a class name should be included. The function should process these arguments and return a single string containing all class names that meet their respective conditions, separated by spaces.</p>
+<p><strong>Example:</strong></p>
+<pre><code>
+// If isActive is true and isError is false, 
+// buttonClasses should be: 'btn btn-active'
+const buttonClasses = classnames(
+    'btn',
+    isActive &amp; &amp; 'btn-active',
+    isError &amp;&amp; 'btn-error'
+);
+
+</code></pre>
+<p>This example demonstrates how the <code>classnames</code> function allows for flexible and conditional class name assignment based on the <code>isActive</code> and <code>isError</code> conditions. Implementing this function will enhance your ability to manage dynamic styling in your web applications.</p>
+
+<hr/>
+<p><strong>Question 28:</strong></p>
+<p>Given a root node of a DOM tree, write a function to traverse the tree level by level and return an array of nodes in the order they are visited. This task simulates a breadth-first search (BFS) traversal of the Document Object Model (DOM), which is particularly useful for various web development tasks, such as manipulating or querying a webpage&#8217;s structure.</p>
+<p>The function should take a single argument: the root node of the DOM tree to be traversed. It should return an array containing the nodes in the order they were visited during the traversal. The DOM tree can be visualized as a hierarchical structure of nodes, where each node represents an element in the webpage, and its children represent the nested elements within it.</p>
+<p><strong>Example:</strong></p>
+<pre><code>
+Input: Root node of a DOM tree representing the following HTML structure:
+&lt;div&gt;
+  &lt;p&gt;Paragraph 1&lt;/p&gt;
+  &lt;div&gt;
+    &lt;p&gt;Paragraph 2&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+Output: [div, p (Paragraph 1), div, p (Paragraph 2)]
+</code></pre>
+<p>This example illustrates a simple case where the function starts at the root <code>&lt;div&gt;</code> node, adds it to the results array, and then proceeds to its children, adding them to the array in the order they appear, level by level. The process continues until all nodes in the tree have been visited and added to the results array.</p>
+<p>Your task is to implement this traversal function, ensuring that it accurately reflects the breadth-first search approach and correctly captures the structure of the DOM tree.</p>
+
+<hr/>
+<p><strong>Question 29:</strong></p>
+<p>In this continuation of the Event Logger series, your task is to enhance the Event Logger system by integrating it with a user interface that generates events based on user interactions. Specifically, you&#8217;ll work with a grid of colored squares. Each time a square is clicked, an event should be logged, capturing essential details such as the event name, timestamp, and the color of the clicked square.</p>
+<p>The core functionality should be encapsulated within an <code>EventLogger</code> class. This class is responsible for batching events and sending them off at specified intervals, rather than sending each event immediately. This approach is crucial for optimizing performance and reducing network load, especially in scenarios with frequent user interactions.</p>
+<p>The requirements for &#8220;Event Logger II&#8221; include:</p>
+<ul>
+<li>Implement an <code>EventLogger</code> class that batches events and sends them at defined intervals.</li>
+<li>Each square in the provided grid should be clickable, with each click generating a loggable event.</li>
+<li>The logged event should include details such as the event name (e.g., &#8220;click&#8221;), the timestamp of the interaction, and the color of the square that was clicked.</li>
+<li>The <code>EventLogger</code> should temporarily store events in a queue and only send them once the batch interval has elapsed, ensuring that events are sent in batches rather than individually.</li>
+</ul>
+<p>Example HTML structure for the grid of squares:</p>
+<pre><code>&lt;div id="grid"&gt;
+  &lt;div class="square" style="background-color: #ff5000;"&gt;&lt;/div&gt;
+  &lt;!-- Additional squares follow --&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Through &#8220;Event Logger II,&#8221; you&#8217;ll demonstrate the ability to handle user-generated events in a performant manner, leveraging batch processing to efficiently log and send event data.</p>
+
+<hr/>
+<p><strong>Question 30:</strong></p>
+<p>You are tasked with developing a part of an Event Logger system, specifically focusing on the feature that sends requests and logs events with a configurable delay. The goal is to simulate the behavior of sending requests to a server and logging the events, including the time elapsed since the initialization of the logger. The system should allow for a delay in logging to mimic network latency or processing time, and it should also provide functionality to abort a logging request.</p>
+<p>The requirements for this part of the Event Logger system are as follows:</p>
+<ul>
+<li>Initialize a start time that serves as a reference point for calculating the elapsed time for each event logged.</li>
+<li>Provide a function to set a delay for the logging of events, simulating network latency or processing time.</li>
+<li>Include a function to reset the delay to zero, effectively removing any simulated latency.</li>
+<li>Implement a function to send logging requests. Each request should log the event with the specified delay, and include the elapsed time since the logger&#8217;s initialization.</li>
+<li>Equip each logging request with the capability to be aborted, in which case the event should be logged immediately with an &#8220;[ABORTED]&#8221; tag.</li>
+</ul>
+<p>Example usage:</p>
+<pre><code>// Initialize the logger
+_initializeStartTime();
+
+// Set a simulated delay of 500ms for logging events
+_setFetchResponseDelay(500);
+
+// Send a logging request
+const logRequest = sendRequest({ event: 'UserLogin', details: 'User logged in successfully' });
+
+// Optionally, the logging request can be aborted
+// logRequest.abort();
+</code></pre>
+<p>The expected output should include the logged events with their respective elapsed times and indicate whether they were aborted.</p>
+
+<hr/>
+<p><strong>Question 31:</strong></p>
+<p>You are tasked with creating an asynchronous request queue in JavaScript. The primary objective is to ensure that each request in the queue is executed sequentially, adhering to the order in which they were added to the queue. The execution of a subsequent request should commence only after the completion of the preceding one. Your challenge involves developing a function named <code>requestQueue</code>, which accepts an array of request promises as input and returns a promise that resolves to an array containing the results of these requests, maintaining the sequence of their execution.</p>
+<p>Consider the following example of requests:</p>
+<pre><code>const requests = [ 
+  fetch('https://api.example.com/data/1'), 
+  fetch('https://api.example.com/data/2'), 
+  fetch('https://api.example.com/data/3') 
+];
+</code></pre>
+<p>The expected output should be an array containing the results of the requests, in the order they were executed:</p>
+<pre><code>[
+  // Result of the first request
+  { /* data for request 1 */ },
+  // Result of the second request
+  { /* data for request 2 */ },
+  // Result of the third request
+  { /* data for request 3 */ }
+]
+</code></pre>
+<p>The <code>requestQueue</code> function is crucial for scenarios where the order of request execution and completion is paramount, ensuring that each request is given due consideration in a sequential manner.</p>
+
+<hr/>
+<p><strong>Question 32:</strong></p>
+<p>You are provided with an array of API URLs, where the position of each URL in the array indicates the priority of its respective API. The task involves fetching these APIs concurrently and obtaining the result from the highest-priority API that returns a successful response. Should all the API calls result in failure, it&#8217;s essential to manage the rejection appropriately.</p>
+<p>Consider the following example of API URLs:</p>
+<ul>
+<li><code>https://api.example.com/api1</code></li>
+<li><code>https://api.example.com/api2</code></li>
+<li><code>https://api.example.com/api3</code></li>
+</ul>
+<p>The objective is to execute these API requests in parallel and secure the result from the API with the highest priority (earliest in the array) that successfully responds. In scenarios where every API call is unsuccessful, the system must adeptly handle the collective failure.</p>
+
+<hr/>
+<p><strong>Question 33:</strong></p>
+<p>You are tasked with safeguarding a web service or an API endpoint from potential abuse, such as denial-of-service (DOS) attacks, by implementing a rate limiter. Build a function called <code>isAllowed</code> within a <code>RateLimiter</code> class. This function should deny any request from a unique client that exceeds the threshold of 100 requests within the last second.</p>
+<p>Consider the following examples to understand the functionality of the <code>isAllowed</code> function:</p>
+<ul>
+<li>If Client A has initiated 99 requests in the preceding second and makes another request, <code>isAllowed</code> should <strong>Allow</strong> this request.</li>
+<li>If Client B has sent 101 requests within the same timeframe, <code>isAllowed</code> should <strong>Deny</strong> any subsequent requests from Client B.</li>
+<li>If Client C has made 50 requests in the past second, the next request from Client C should also be <strong>Allowed</strong> by <code>isAllowed</code>.</li>
+</ul>
+<p>This rate limiting mechanism serves as a defensive measure against excessive usage or attacks, ensuring that the web service remains available and performs optimally for all users.</p>
+
+<hr/>
+<p><strong>Question 34:</strong></p>
+<p>The task at hand involves creating a custom function named <code>mySetInterval(func, delay, period)</code> that diverges from the traditional <code>window.setInterval</code> behavior. Instead of executing the provided function <code>func</code> at regular intervals, this function should execute <code>func</code> with increasing delays following a linear pattern. The delay before each subsequent execution is calculated using the formula <code>delay + period * count</code>, where <code>count</code> is the number of times the function has been called.</p>
+<p>To illustrate, consider the following example:</p>
+<pre><code>let prev = Date.now();
+const func = () => {
+  const now = Date.now();
+  console.log('Time elapsed:', now - prev, 'ms');
+  prev = now;
+};
+
+const id = mySetInterval(func, 100, 200);
+
+// Output:
+// Time elapsed: 100ms
+// Time elapsed: 400ms (100 + 200 * 1)
+// Time elapsed: 900ms (100 + 200 * 2)
+// Time elapsed: 1600ms (100 + 200 * 3)
+// ...
+</code></pre>
+<p>This functionality allows for scheduling tasks with increasing intervals, which can be particularly useful in scenarios where the intensity of task execution needs to decrease over time.</p>
+<p>Additionally, a function named <code>myClearInterval(id)</code> should be provided to stop the scheduled execution. This function should take an identifier returned by <code>mySetInterval</code> and cancel the scheduled task.</p>
+<p>The challenge lies not only in implementing the increasing delay logic but also in ensuring that the <code>mySetInterval</code> and <code>myClearInterval</code> functions can be used similarly to their native JavaScript counterparts, providing a seamless interface for scheduling and canceling tasks with dynamic intervals.</p>
+
+<hr/>
+<p><strong>Question 35:</strong></p>
+<p>Imagine you&#8217;re working with JavaScript&#8217;s <code>window.setInterval()</code> function, which is commonly used to schedule tasks for future execution. Your challenge is to not only utilize <code>setInterval</code> effectively but also to create a function named <code>clearAllIntervals()</code>. This function should be capable of clearing all active interval timers, proving especially useful for cleaning up pending tasks before a page transition.</p>
+<p>Consider the scenario where multiple functions are scheduled to execute after a delay, as illustrated in the example below:</p>
+<pre><code>setInterval(func1, 10000); 
+setInterval(func2, 10000); 
+setInterval(func3, 10000); // All three functions are scheduled for execution after a 10-second delay</code></pre>
+<p>The task is to implement the <code>clearAllIntervals()</code> function such that calling it cancels all previously scheduled tasks:</p>
+<pre><code>clearAllIntervals(); // Cancels all scheduled tasks</code></pre>
+<p>This challenge tests your ability to manipulate and work with timers in a frontend environment effectively. You are required to maintain the interface of <code>window.setInterval</code> and <code>window.clearInterval</code> but are allowed to augment their underlying logic to incorporate the functionality of <code>clearAllIntervals()</code>.</p>
+<p>This task not only assesses your proficiency with JavaScript timers but also your capacity to design clean and efficient solutions for managing asynchronous tasks in web applications.</p>
+
+<hr/>
+<p><strong>Question 36:</strong></p>
+<p>Imagine you&#8217;re tasked with scheduling tasks for future execution in a frontend environment, utilizing the <code>window.setTimeout()</code> function. Your challenge doesn&#8217;t stop there; you must also create a function named <code>clearAllTimeout()</code>. This function should be capable of clearing all active timers, ensuring a clean slate of pending tasks, particularly useful during page transitions.</p>
+<p>Consider the scenario where you&#8217;ve scheduled multiple functions for execution after a 10-second delay:</p>
+<pre><code>setTimeout(func1, 10000);
+setTimeout(func2, 10000);
+setTimeout(func3, 10000); // All three functions are set to execute after 10 seconds.</code></pre>
+<p>The requirement is to halt all these scheduled tasks with a single call to <code>clearAllTimeout()</code>:</p>
+<pre><code>clearAllTimeout(); // This call should cancel all previously scheduled tasks.</code></pre>
+<p>Your solution must adhere to the existing interface of <code>window.setTimeout</code> and <code>window.clearTimeout</code>, but you are encouraged to redefine their underlying implementations. This exercise will test your ability to manipulate timers efficiently in a frontend development context, showcasing your skills in managing asynchronous tasks.</p>
+<p>Through this challenge, you&#8217;ll demonstrate not only your proficiency in using JavaScript timers but also your innovative approach to enhancing and controlling their behavior to suit specific application needs.</p>
+
+<hr/>
+<p><strong>Question 37:</strong></p>
+<p>Given a string and an array representing styles, the task is to render HTML similar to the output of a rich text editor.</p>
+<p>The input consists of a string and a style array. Each element in the style array is another array that contains three items: the start index, the end index, and the HTML tag to be applied. The goal is to apply these styles to the specified ranges within the string and generate the corresponding HTML output.</p>
+<p><strong>Example:</strong></p>
+<pre><code>Input: 'Hello, world', [[0, 2, 'i'], [4, 9, 'b'], [7, 10, 'u']]
+
+Output: '&lt;i&gt;Hel&lt;/i&gt;l&lt;b&gt;o, w&lt;u&gt;orl&lt;/u&gt;&lt;/b&gt;&lt;u&gt;d&lt;/u&gt;'</code></pre>
+<p>This example demonstrates overlapping style ranges where the <code>&lt;u&gt;</code> tag is applied both within and outside the <code>&lt;b&gt;</code> tag&#8217;s range, showing the complexity of nesting and ordering HTML tags based on the input style ranges.</p>
+<p>The challenge lies in correctly applying the styles, especially when the style ranges overlap, ensuring that the HTML tags are nested and ordered properly according to their positions in the input string.</p>
+
+<hr/>
+<p><strong>Question 38:</strong></p>
+<p>Write a function that animates an HTML element to move towards the right by a specified distance over a given duration. The function should utilize the <code>requestAnimationFrame</code> method to ensure smooth animation.</p>
+<p><strong>Example:</strong></p>
+<p>Input:</p>
+<ul>
+<li><code>elementID</code>: &#8216;hello&#8217;</li>
+<li><code>distance</code>: 400</li>
+<li><code>duration</code>: 1000</li>
+</ul>
+<p>Expected Output:</p>
+<p>The element with the ID &#8216;hello&#8217; should gradually move 400 pixels to the right over a duration of 1000 milliseconds.</p>
+
+<hr/>
+<p><strong>Question 39:</strong></p>
+<p>Given an HTML element and a specific word to look for, the task is to write a function that highlights the occurrences of that word within the text content of the element. The function should encapsulate the found word with a <code>span</code> element having a specified background color to visually emphasize the highlighted text.</p>
+<p>Consider the following HTML structure as an input example:</p>
+<pre><code>&lt;div id="hello"&gt; I have some text 
+  &lt;p&gt;Which has some subtext &lt;a href="#"&gt;that has a link&lt;/a&gt;&lt;/p&gt; 
+  &lt;p&gt;And a sibling&lt;/p&gt; 
+  Finally some random text
+&lt;/div&gt;</code></pre>
+<p>The objective is to highlight a word, for instance, &#8220;Finally&#8221;, within the <code>div</code> element with the id <code>hello</code>. The word &#8220;Finally&#8221; should be wrapped in a <code>span</code> element with a background color, for example, red, to visually differentiate it from the rest of the text.</p>
+<p>This challenge requires manipulating the DOM to dynamically change the HTML content based on the text search criteria. The solution should ensure that only text content is affected without altering the inherent structure of the HTML or affecting nested elements such as <code>&lt;p&gt;</code> and <code>&lt;a&gt;</code>.</p>
+
+<hr/>
+<p><strong>Question 40:</strong></p>
+<p>Build a JSX-like compiler that transforms a given string representing HTML code into a JavaScript object representation. The compiler should parse the HTML-like string and extract the tag name, attributes (if any), and children content. Consider the following input string:</p>
+<pre><code>&lt;a&gt;frontendlead.com&lt;/a&gt;</code></pre>
+<p>The expected output for the above input should be:</p>
+<pre><code>{
+ "openingElement": {
+  "name": "a"
+ },
+ "closingElement": {
+  "name": "a"
+ },
+ "props": {
+  "children": [
+   "frontendlead.com"
+  ]
+ }
+}</code></pre>
+<p>The compiler must handle various cases, including strings with extra spaces, and ensure proper tag formatting. For instance, the following examples should be successfully parsed:</p>
+<ul>
+<li><code>&lt;a&gt;bfe.dev&lt;/a&gt;</code></li>
+<li><code>&lt; a &gt; bfe.dev &lt; / a &gt;</code></li>
+</ul>
+<p>However, certain inputs should trigger parsing errors, such as:</p>
+<ul>
+<li>Incorrect tag formats like <code>'2a&gt;bfe.dev&lt;/a&gt;'</code> or <code>'&lt;a&gt;&lt;/b&gt;'</code></li>
+<li>Strings that do not strictly follow the tag structure, e.g., <code>'&lt;a&gt;&gt;&lt;/a&gt;'</code>, <code>'&lt;a&gt;&lt;a&gt;'</code></li>
+<li>Unmatched opening and closing tags or misplaced characters within tags</li>
+</ul>
+<p>This challenge aims to assess your ability to parse and transform string data, manage errors, and construct object representations, which are essential skills in front-end development and working with virtual DOM concepts.</p>
+
+<hr/>
+<p><strong>Question 41:</strong></p>
+<p>Building on the concept of Virtual DOM introduced in Virtual DOM I, this challenge involves transforming a virtualized JSON representation of a DOM tree back into a valid DOM structure. The process should accurately recreate the DOM elements, including their attributes and nested structure, from the virtual representation.</p>
+<p>Given a virtual DOM representation like:</p>
+<pre><code>{
+  "type": "div",
+  "props": {
+    "children": [{
+      "type": "h1",
+      "props": {
+        "children": "this is"
+      }
+    }, {
+      "type": "p",
+      "props": {
+        "className": "paragraph",
+        "children": ["a ", {
+          "type": "button",
+          "props": {
+            "children": "button"
+          }
+        }, " from", {
+          "type": "a",
+          "props": {
+            "href": "https://frontendlead.com",
+            "children": [{
+              "type": "b",
+              "props": {
+                "children": "frontendlead"
+              }
+            }, ".com"]
+          }
+        }]
+      }
+    }]
+  }
+}</code></pre>
+<p>Your task is to implement a function <code>render()</code> that takes this object literal representation of a DOM tree and recreates the corresponding real DOM tree, as shown below:</p>
+<pre><code>&lt;div id="root"&gt;
+   &lt;h1&gt;
+     this is
+   &lt;/h1&gt;
+   &lt;p class="paragraph"&gt;
+     a
+     &lt;button&gt;
+       button
+     &lt;/button&gt;
+     from
+     &lt;a href="https://frontendlead.com"&gt;
+       &lt;b&gt;frontendlead&lt;/b&gt;
+       .com
+     &lt;/a&gt;
+   &lt;/p&gt;
+&lt;/div&gt;</code></pre>
+<p>The function should support basic HTML tags and properties, including the handling of text nodes, single or multiple children, and camelCased properties like <code>className</code>.</p>
+<p>This challenge tests your understanding of DOM manipulation, recursion, and the concept of a virtual DOM, highlighting the algorithmic approach to rendering web interfaces.</p>
+
+<hr/>
+<p><strong>Question 42:</strong></p>
+<p>Explore the concept of serializing and deserializing a DOM tree using JSON, similar to how React represents elements and their properties. This approach offers an alternative to traditional HTML string serialization, providing a structured and easily manipulable format for representing the DOM structure.</p>
+<p>Consider the following example of a DOM tree:</p>
+<pre><code>&lt;div id="root"&gt;
+   &lt;h1&gt;
+     this is
+   &lt;/h1&gt;
+   &lt;p class="paragraph"&gt;
+     a
+     &lt;button&gt;
+       button
+     &lt;/button&gt;
+     from
+     &lt;a href="https://frontendlead.com"&gt;
+       &lt;b&gt;frontendlead&lt;/b&gt;
+       .com
+     &lt;/a&gt;
+   &lt;/p&gt;
+&lt;/div&gt;</code></pre>
+<p>The object representation of this DOM tree might look like:</p>
+<pre><code>{
+  type: 'div',
+  props: {
+    children: [{
+      type: 'h1',
+      props: {
+        children: ' this is '
+      }
+    }, {
+      type: 'p',
+      props: {
+        className: 'paragraph',
+        children: [' a ', {
+          type: 'button',
+          props: {
+            children: ' button '
+          }
+        }, ' from ', {
+          type: 'a',
+          props: {
+            href: 'https://frontendlead.com',
+            children: [{
+              type: 'b',
+              props: {
+                children: 'frontendlead'
+              }
+            }, '.com']
+          }
+        }]
+      }
+    }]
+  }
+}</code></pre>
+<p>Your task is to implement two functions:</p>
+<ul>
+<li><strong>virtualize():</strong> Converts a real DOM tree into its JSON representation.</li>
+<li><strong>render():</strong> Recreates the real DOM tree from its JSON representation.</li>
+</ul>
+<p>Focus on basic HTML tags and properties, excluding complex functionalities like event handlers and custom components. The ability to handle text nodes, single or multiple children, and camelCased properties in your implementation is essential.</p>
+<p>This challenge not only tests your understanding of DOM manipulation and JavaScript object handling but also offers insight into virtual DOM concepts used in frameworks like React.</p>
+
+<hr/>
+<p><strong>Question 43:</strong></p>
+<p>Create a class called <code>NodeStore</code> that allows you to store values associated with DOM nodes. The class should provide the following methods:</p>
+<ul>
+<li><strong>set(node, value):</strong> Sets the value for a given DOM node.</li>
+<li><strong>get(node):</strong> Retrieves the value associated with a given DOM node.</li>
+<li><strong>has(node):</strong> Checks if a given DOM node exists in the store.</li>
+</ul>
+<p>Remember, we will be storing DOM nodes, so each retrieval might have the same node item, so we want keys to be unique.</p>
+<p><strong>Example:</strong></p>
+<pre><code>const node1 = document.createElement('p');
+const node2 = document.createElement('p');
+const store = new NodeStore();
+store.set(node1, 1);
+store.set(node2, 2);
+console.log(store.get(node1)); // Expected output: 1
+console.log(store.get(node2)); // Expected output: 2</code></pre>
+<p>This task tests your understanding of JavaScript classes, DOM manipulation, and associative arrays or objects. It&#8217;s a practical scenario for frontend developers who need to manage state or metadata associated with specific DOM elements dynamically.</p>
+
+<hr/>
+<p><strong>Question 44:</strong></p>
+<p>Given a DOM tree representing a webpage and a limit (K), write a function to find the K most frequently appeared text nodes in the webpage. A text node is considered as a string of non-empty characters that are not equal to &#8216;↵&#8217;. Ignore other node types (e.g., element nodes) while counting the frequency. Return an array containing the K most frequent text nodes in descending order of their frequencies.</p>
+<p><strong>Example:</strong></p>
+<p>Consider the following webpage HTML:</p>
+<pre><code>&lt;div id="root"&gt;
+  &lt;p&gt;This is a paragraph.&lt;/p&gt;
+  &lt;div&gt;
+    &lt;span&gt;This is some text.&lt;/span&gt;
+    &lt;p&gt;Another paragraph here.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;p&gt;This is another paragraph.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+<p>Input:</p>
+<ul>
+<li>tree = DOM tree of the webpage</li>
+<li>limit = 3</li>
+</ul>
+<p>The function <code>findKFrequentWordsInTree(tree, limit)</code> should analyze the text nodes within the given DOM tree and return the K (3 in this example) most frequently occurring text nodes.</p>
+<p>The expected output for this example, assuming the function correctly identifies and counts the frequency of text nodes, might be an array like <code>['This', 'is', 'a']</code>, reflecting the most common text nodes within the specified limit.</p>
+<p>This task tests your ability to traverse and process DOM trees, count frequency of specific nodes, and return a sorted list of these nodes based on their frequency, which are essential skills for manipulating web page content dynamically.</p>
+
+<hr/>
+<p><strong>Question 45:</strong></p>
+<article>
+<img loading="lazy" decoding="async" class="alignnone size-medium wp-image-195" src="https://api.frontendlead.com/wp-content/uploads/2024/03/I8ncH1ncdGaBXV3nwPH061w1MmdqNR9p_1169x546_1597852405395-300x140.png" alt="" width="300" height="140" srcset="https://api.frontendlead.com/wp-content/uploads/2024/03/I8ncH1ncdGaBXV3nwPH061w1MmdqNR9p_1169x546_1597852405395-300x140.png 300w, https://api.frontendlead.com/wp-content/uploads/2024/03/I8ncH1ncdGaBXV3nwPH061w1MmdqNR9p_1169x546_1597852405395-1024x478.png 1024w, https://api.frontendlead.com/wp-content/uploads/2024/03/I8ncH1ncdGaBXV3nwPH061w1MmdqNR9p_1169x546_1597852405395-768x359.png 768w, https://api.frontendlead.com/wp-content/uploads/2024/03/I8ncH1ncdGaBXV3nwPH061w1MmdqNR9p_1169x546_1597852405395.png 1169w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+<p>You are tasked with creating a function <code>findNextRightSibling</code> that identifies the next right sibling of a given node within a tree structure, resembling the DOM tree. This function should traverse the tree in a breadth-first manner, using a queue to keep track of the nodes.</p>
+<p>The function <code>findNextRightSibling</code> takes two arguments:</p>
+<ul>
+<li><code>root</code>: The root node of the tree from which the search begins.</li>
+<li><code>target</code>: The node for which you want to find the next right sibling.</li>
+</ul>
+<p>The goal is to find and return the node that is the immediate right sibling of the <code>target</code> node. If the <code>target</code> node is the last child of its parent or does not have any right siblings, the function should return <code>null</code>.</p>
+<p>This functionality is crucial for applications that need to understand or manipulate hierarchical structures similar to the DOM, where knowing a node&#8217;s relationship to its siblings can influence layout, styling, or interactivity.</p>
+</article>
+
+<hr/>
+<p><strong>Question 46:</strong></p>
+<article>
+<p>Write a function named <code>myRepeat</code> that extends the String prototype. This function should allow a string to be repeated a specified number of times, enhancing the native capabilities of string manipulation in JavaScript.</p>
+<h3>Input</h3>
+<ul>
+<li><strong>String:</strong> The string to be repeated.</li>
+<li><strong>Integer (times):</strong> The number of times the string should be repeated.</li>
+</ul>
+<h3>Output</h3>
+<p>A new string that concatenates the original string the specified number of times.</p>
+<h3>Example</h3>
+<p><strong>Input:</strong> <code>"hello world ".myRepeat(2)</code></p>
+<p><strong>Output:</strong> <code>"hello world hello world "</code></p>
+<p>The function <code>myRepeat</code> takes an integer <code>times</code> as an argument and returns a new string that repeats the original string <code>times</code> number of times. This custom method does not modify the original string but instead returns a new string with the repeated content, demonstrating an extension of the String prototype&#8217;s functionality in JavaScript.</p>
+</article>
+
+<hr/>
+<p><strong>Question 47:</strong></p>
+<article>Develop a function <code>excludeItems</code> tasked with filtering an array of items by removing those that meet specific exclusion criteria. This function plays a pivotal role in data processing, enabling the refinement of datasets based on dynamic conditions.</p>
+<h3>Function Input</h3>
+<ul>
+<li><strong>items</strong> (Array of Objects): A collection of items, each represented as an object with various properties such as <em>color</em>, <em>type</em>, and <em>age</em>.</li>
+<li><strong>excludes</strong> (Array of Objects): Criteria for exclusion, with each criterion as an object containing properties <em>k</em> (the property name to consider for exclusion) and <em>v</em> (the value of that property leading to exclusion).</li>
+</ul>
+<h3>Function Output</h3>
+<p>Returns a filtered array comprising items that do not align with the specified exclusion criteria.</p>
+<h3>Example</h3>
+<p>Consider the following <em>items</em> array and <em>excludes</em> criteria:</p>
+<pre><code>const items = [
+  { color: 'red', type: 'tv', age: 18 },
+  { color: 'silver', type: 'phone', age: 20 },
+  { color: 'blue', type: 'book', age: 17 }
+];
+
+const excludes = [
+  { k: 'color', v: 'blue' },
+  { k: 'type', v: 'phone' }
+];
+</code></pre>
+<p>Executing <code>excludeItems(items, excludes)</code> should yield:</p>
+<pre><code>[{ color: 'red', type: 'tv', age: 18 }]</code></pre>
+<p>This output represents the items array after the exclusion of items with a <em>color</em> of &#8216;blue&#8217; and <em>type</em> of &#8216;phone&#8217;, based on the specified criteria.</p>
+<h3>Objective</h3>
+<p>The goal is to implement a versatile function capable of sifting through an array of objects and excluding those that meet certain key-value criteria, thus refining the dataset for subsequent processing or analysis.</p>
+</article>
+
+<hr/>
+<p><strong>Question 48:</strong></p>
+<p>Write a function <code>topKWords(log, k)</code> that analyzes a given log file content and identifies the top K most frequently occurring words within it. The function should return an array containing these top K words, sorted by their frequency of occurrence in descending order.</p>
+<p>For instance, given a log:</p>
+<pre><code>
+May 12, 2023: User1 logged in.
+May 13, 2023: User2 logged in.
+May 13, 2023: User1 performed an action.
+May 14, 2023: User3 logged in.
+May 15, 2023: User2 performed an action.
+May 15, 2023: User1 logged out.
+</code></pre>
+<p>And a value of K = 3, the function <code>topKWords(log, 3)</code> should return:</p>
+<pre><code>['User1', 'logged', 'May']</code></pre>
+<p>This output represents the top 3 most frequently occurring words in the log, which are &#8216;User1&#8217;, &#8216;logged&#8217;, and &#8216;May&#8217; in this example.</p>
+<p>The function should process the log content to count word occurrences, then sort and return the most frequent words up to the specified limit of K.</p>
+
+<hr/>
+<p><strong>Question 49:</strong></p>
+<p>Write a function <code>flattenWithPrefix(obj, prefix)</code> that flattens a nested object into a single-level object. Each key in the resulting object should be a concatenation of the keys from the nested object, prefixed with the specified prefix. The function should handle arbitrary levels of nesting.</p>
+<p>For example, given the input object:</p>
+<pre><code>const input = { a: { b: { c: 1 }, d: 2 } };</code></pre>
+<p>The expected output, with each key flattened and prefixed, would be:</p>
+<pre><code>{ 'a.b.c': 1, 'a.d': 2 }</code></pre>
+<p>The function should be able to traverse through the nested object, concatenating each key with its parent key(s) and the given prefix, to create a new, flattened object structure where each key represents the &#8220;path&#8221; to its value within the original nested object.</p>
+
+<hr/>
+<p><strong>Question 50:</strong></p>
+<p>Enhance the <code>memoize</code> function by implementing a more sophisticated caching mechanism using a Trie data structure. This approach optimizes memory usage by storing each argument of the memoized function as a node within a Trie, rather than concatenating arguments into a single string key.</p>
+<p>The updated <code>memoize</code> function should work as follows:</p>
+<ul>
+<li>It accepts a function <code>func</code> and returns a new function that caches the results of <code>func</code> based on its arguments.</li>
+<li>The cache is represented by a Trie structure, where each node corresponds to an argument of the memoized function.</li>
+<li>If the memoized function is called with a set of arguments that has been previously used, the function retrieves the result from the Trie cache instead of executing <code>func</code> again.</li>
+<li>If the set of arguments is new, the memoized function executes <code>func</code>, stores the result in the Trie cache, and returns the result.</li>
+</ul>
+<p>This approach minimizes memory consumption by avoiding the need to store serialized representations of arguments. Instead, the Trie structure efficiently represents the hierarchical relationship between arguments, making it an ideal choice for caching function results.</p>
+<p>The implementation includes two helper classes, <code>TrieNode</code> and <code>Trie</code>, which provide the necessary structure and methods for the Trie cache, such as <code>set</code>, <code>has</code>, and <code>get</code>, similar to the Map object.</p>
+
+<hr/>
+<p><strong>Question 51:</strong></p>
+<p>Create a function <code>memoize</code> that enhances the efficiency of function calls by caching the results. Given a callback function and an optional resolver function, <code>memoize</code> should return a new function that remembers the results of previous invocations with specific arguments, thereby avoiding redundant calculations for the same inputs.</p>
+<p>The returned function, <code>memoizedFn</code>, should operate as follows:</p>
+<ul>
+<li>It checks if the result for a given set of arguments is already stored in a cache. If so, it returns the cached result instead of executing the callback again.</li>
+<li>If the result for the given arguments is not in the cache, <code>memoizedFn</code> calls the original callback with those arguments, stores the result in the cache, and then returns the result.</li>
+<li>The cache should be a <code>Map</code> object where keys represent argument combinations, and values are the callback results for those arguments.</li>
+</ul>
+<p>Additionally, <code>memoizedFn</code> includes methods for cache management:</p>
+<ul>
+<li><code>has</code>: Checks if a result for a specific set of arguments is already cached.</li>
+<li><code>delete</code>: Removes the cached result for a specific set of arguments.</li>
+<li><code>clear</code>: Clears the entire cache.</li>
+</ul>
+<p>The optional <code>resolver</code> function, if provided, generates a custom key for caching based on the arguments passed to <code>memoizedFn</code>. If not provided, the key is generated by stringifying the arguments.</p>
+<p>This memoization technique is particularly useful for optimizing performance in applications with heavy computational functions or expensive database queries that are frequently called with the same arguments.</p>
+
+<hr/>
+<p><strong>Question 52:</strong></p>
+<p>Extend the Promise object in JavaScript by implementing custom methods that mimic the functionality of existing Promise methods. Specifically, you are required to create the following methods:</p>
+<ul>
+<li><code>Promise.myRace</code>: This method should mimic the behavior of <code>Promise.race</code>, returning a promise that resolves or rejects as soon as one of the promises in the input array does, reflecting that promise&#8217;s outcome.</li>
+<li><code>Promise.myAny</code>: Similar to <code>Promise.any</code>, this method should return a promise that resolves as soon as any one of the input promises resolves, with the value of the resolved promise. If all input promises are rejected, it should reject with an aggregate error.</li>
+<li><code>Promise.myAll</code>: This method should emulate <code>Promise.all</code>, returning a promise that resolves when all of the input promises have resolved, with an array of the results, or rejects as soon as one of the input promises rejects.</li>
+<li><code>Promise.myAllSettled</code>: Inspired by <code>Promise.allSettled</code>, this method should return a promise that resolves after all input promises have settled (resolved or rejected), with an array of objects that each describe the outcome of each promise.</li>
+</ul>
+<p>For example, using <code>Promise.myRace</code>, you can race multiple promises against each other and act upon the first to settle, whether it resolves or rejects:</p>
+<pre><code>Promise.myRace([Promise.resolve('First'), Promise.reject('Second'), Promise.resolve('Third')])
+  .then(value =&gt; console.log(value))
+  .catch(error =&gt; console.error(error));
+// Expected output: "First"
+</code></pre>
+<p>Implementing these methods will give you deeper insights into the workings of promises in JavaScript, enhancing your understanding of asynchronous programming patterns.</p>
+
+<hr/>
+<p><strong>Question 53:</strong></p>
+<p>Implement a simple testing framework for frontend code that allows you to define test suites and test cases, and provides assertion methods for validating expected outcomes. Write the necessary functions and classes to achieve this.</p>
+<p>The framework should enable the definition of a <code>describe</code> function for test suites, an <code>it</code> function for test cases within those suites, and an <code>expect</code> function for making assertions within those test cases. The framework should support the following functionalities:</p>
+<ul>
+<li>Grouping related test cases using the <code>describe</code> function.</li>
+<li>Defining individual test cases with the <code>it</code> function that describes the specific test.</li>
+<li>Making assertions within test cases using the <code>expect</code> function and assertion methods like <code>toExist</code>, <code>toBe</code>, and <code>toBeType</code>.</li>
+</ul>
+<p>For example:</p>
+<pre><code>describe('Hello world', () =&gt; {
+  it('input exists', () =&gt; {
+    let input = null;
+    expect(input).toExist();
+  });
+});</code></pre>
+<p>This should produce an output like:</p>
+<pre><code>beginning test suite Hello world
+beginning test case input exists
+failed running test suite Hello world on test case input exists with error message expected value to exist but got null</code></pre>
+<p>Another example:</p>
+<pre><code>describe('Hello world', () =&gt; {
+  it('input is as expected', () =&gt; {
+    let input = 'foo';
+    let expected = 'fooo';
+    expect(input).toBe(expected);
+  });
+});</code></pre>
+<p>Should result in:</p>
+<pre><code>beginning test suite Hello world
+beginning test case input is as expected
+failed running test suite Hello world on test case input is as expected with error message expected "foo" to be "fooo"</code></pre>
+<p>And:</p>
+<pre><code>describe('Hello world', () =&gt; {
+  it('input is as expected', () =&gt; {
+    let input = 'foo';
+    let expected = 'string';
+    expect(input).toBeType(expected);
+  });
+});</code></pre>
+<p>Would output:</p>
+<pre><code>beginning test suite Hello world
+beginning test case input is as expected
+failed running test suite Hello world on test case input is as expected with error message expected "foo" to be of type "string" but got "object"</code></pre>
+<p>This framework aims to provide a lightweight and straightforward way for developers to write and organize tests, ensuring the reliability and correctness of their frontend code.</p>
+
+<hr/>
+<p><strong>Question 54:</strong></p>
+<section>Your task is to implement the <code>promisify</code> function. This function should:</p>
+<ul>
+<li>Accept a callback-based function as its only argument.</li>
+<li>Return a new function that, when called, returns a Promise.</li>
+<li>Ensure that if the original function calls the callback with an error, the returned Promise is rejected with that error.</li>
+<li>Resolve the returned Promise with the result if the original function completes successfully.</li>
+</ul>
+<p>This transformation will allow developers to invoke legacy callback-based functions in a more modern, cleaner, and more intuitive way, improving code readability and error handling.</p>
+</section>
+
+<hr/>
+<p><strong>Question 55:</strong></p>
+<p>You are tasked to build a <code>createDom</code> function, which is designed to dynamically create Document Object Model (DOM) elements or a tree of elements based on a structured definition provided by a root object. This root object might represent a simple text node or a more elaborate construct with nested elements, each potentially endowed with its own attributes and children.</p>
+<p>The <code>createDom</code> function aims to facilitate the programmatic construction of DOM elements for the dynamic generation of web content. It is capable of:</p>
+<ul>
+<li>Creating simple text nodes by enclosing them within a paragraph element when the root is a string.</li>
+<li>Generating complex elements as defined by an object, which specifies the type of element (tag name), attributes (like class, id, etc.), and children (which can be additional elements or text).</li>
+</ul>
+<p><strong>Example Usage:</strong></p>
+<pre><code>
+// Define a complex structure for the DOM
+const root = {
+    type: 'div',
+    attributes: { class: 'container' },
+    children: [
+        { type: 'h1', children: ['Title'] },
+        { type: 'p', children: ['This is a paragraph.'] }
+    ]
+};
+
+// Utilize createDom to construct the DOM based on the defined structure
+const dom = createDom(root);
+
+// Append the newly created DOM to the document body or another DOM element
+document.body.appendChild(dom);
+</code></pre>
+<p>This approach empowers developers to dynamically generate and update web page content programmatically, based on data or user interactions, enhancing the flexibility and interactivity of web applications.</p>
+
+<hr/>
+<p><strong>Question 56:</strong></p>
+<article>
+<section>
+<h1>Implementing a Basic Observable Class in JavaScript</h1>
+<p>In modern application development, especially in asynchronous event-driven architectures, Observables play a pivotal role. They allow subscribing to a stream of values and receiving notifications for new values, errors, and completion events. This functionality is essential for managing asynchronous data flows and handling events in a decoupled manner.</p>
+</section>
+<section>
+<h2>Objective</h2>
+<p>Your task is to implement a basic <code>Observable</code> class in JavaScript. This class should enable the subscription to a stream of values, supporting multiple subscribers and handling errors and completion events effectively.</p>
+</section>
+<section>
+<h2>Requirements</h2>
+<ul>
+<li>The class must support multiple subscribers.</li>
+<li>It should handle errors and completion events, delivering these notifications exactly once.</li>
+<li>Subsequent <code>next</code>, <code>error</code>, or <code>complete</code> calls after an error/complete event should be ignored.</li>
+<li>The <code>subscribe</code> function should accept either an object with <code>next</code>, <code>error</code>, and <code>complete</code> methods or a function treated as the <code>next</code> method.</li>
+<li>The <code>subscribe</code> function returns a Subscription object, allowing unsubscribing from the Observable.</li>
+</ul>
+</section>
+<section>
+<h2>Example Usage</h2>
+<p>Consider the following observer object, indicating its purpose through <code>next</code>, <code>error</code>, and <code>complete</code> callbacks:</p>
+<pre><code>const observer = {
+  next: (value) => { console.log('Received a value:', value); },
+  error: (error) => { console.log('Encountered an error:', error); },
+  complete: () => { console.log('No more values to receive.'); }
+};</code></pre>
+<p>This Observer can be associated with an Observable, which dispatches values, errors, or completion signals to the attached Observer:</p>
+<pre><code>const observable = new Observable((subscriber) => {
+  subscriber.next(1);
+  subscriber.next(2);
+  setTimeout(() => {
+    subscriber.next(3);
+    subscriber.next(4);
+    subscriber.complete();
+  }, 100);
+});</code></pre>
+<p>Attaching the observer to the observable and handling the subscription allows for receiving values and notifications as defined:</p>
+<pre><code>const subscription = observable.subscribe(observer);
+// Logs:
+// Received a value: 1
+// Received a value: 2
+// (after delay) Received a value: 3
+// Received a value: 4
+// No more values to receive.</code></pre>
+</section>
+<section>
+<h2>Follow-Up Problems</h2>
+<p>This Observable and Observer implementation introduces a variety of intriguing follow-up problems and patterns to explore, further expanding on reactive programming concepts.</p>
+</section>
+</article>
+
+<hr/>
+<p><strong>Question 57:</strong></p>
+<p>You are tasked with implementing a <code>compose</code> function that combines multiple single-argument functions into a single function. This composite function should apply the given functions in sequence to an initial value, transforming it step by step.</p>
+<p>Given three functions <code>a</code>, <code>b</code>, and <code>c</code>, each performing a distinct mathematical operation on an input value, your <code>compose</code> function should enable these functions to be applied in the order they are provided.</p>
+<p><strong>Example:</strong></p>
+<ul>
+<li>Function <code>a</code>: Multiplies the input by 4.</li>
+<li>Function <code>b</code>: Adds 4 to the input.</li>
+<li>Function <code>c</code>: Subtracts 1 from the input.</li>
+</ul>
+<p>Starting with an initial value of 5, the <code>compose</code> function should return the final result after sequentially applying these functions. Therefore, <code>compose(a, b, c)(5)</code> should yield 23, following these steps:</p>
+<ol>
+<li>Apply <code>a</code> to 5: <code>a(5) = 5 * 4 = 20</code></li>
+<li>Apply <code>b</code> to 20: <code>b(20) = 20 + 4 = 24</code></li>
+<li>Apply <code>c</code> to 24: <code>c(24) = 24 - 1 = 23</code></li>
+</ol>
+<p>This example illustrates the transformation process, demonstrating how each function modifies the value passed through the composition.</p>
+<p>Your implementation should allow for any number of functions to be composed, providing a flexible and powerful tool for function chaining and value transformation.</p>
+
+<hr/>
+<p><strong>Question 58:</strong></p>
+<p>The goal is to implement a <code>curry</code> function in JavaScript that allows a function to be called with arguments one at a time until all arguments have been provided, after which the original function is executed with all of the accumulated arguments. This technique is particularly useful in functional programming where functions are treated as first-class citizens and can be composed or chained together.</p>
+<p>The <code>curry</code> function takes a callback as an argument and returns a new function. This new function can be called multiple times, each with a single argument, until no arguments are provided, at which point the original callback function is executed with all of the previously provided arguments.</p>
+<p>Usage Example:</p>
+<pre><code>const curriedSum = curry((a, b, c) => a + b + c);
+console.log(curriedSum(1)(2)(3)()); // Outputs: 6</code></pre>
+<p>This example defines a <code>curriedSum</code> function that adds three numbers together. The <code>curry</code> function enables <code>curriedSum</code> to be called with one argument at a time, and finally, an empty call triggers the execution of the sum operation with all the provided arguments.</p>
+<p>This approach offers flexibility in how functions receive their arguments, enabling more dynamic and functional programming patterns.</p>
+
+<hr/>
+<p><strong>Question 59:</strong></p>
+<p>In modern application development, the asynchronous event-driven architecture plays a crucial role, especially in handling operations where the response time is uncertain. This architecture allows for a decoupled system where objects (emitters) can emit events at any time, and function objects (listeners) respond to these events as they are triggered.</p>
+<p>The challenge here is to implement an <code>EventEmitter</code> class that encapsulates this behavior. The class should provide mechanisms to:</p>
+<ul>
+<li><strong>Emit events:</strong> Trigger an event by name, executing all callbacks subscribed to this event.</li>
+<li><strong>Subscribe to events:</strong> Allow functions to listen for specific events and respond when those events are emitted. Each subscription should provide a way to release (unsubscribe) itself to avoid memory leaks and unintended behavior.</li>
+</ul>
+<p>The <code>EventEmitter</code> class should work as follows:</p>
+<pre><code>class EventEmitter {
+  constructor() {
+    this.events = {};
+  }
+
+  subscribe(eventName, callback) {
+    // Logic to add a listener for the event
+  }
+
+  emit(eventName, ...args) {
+    // Logic to trigger an event and call all subscribed listeners
+  }
+}</code></pre>
+<p>With this setup, you can create an instance of <code>EventEmitter</code>, subscribe functions to listen for named events, and emit those events at any point in your application. This approach is fundamental in creating non-blocking, asynchronous flows and is at the heart of many JavaScript frameworks and libraries.</p>
+<p>This task will test your ability to work with higher-order functions, callbacks, and the principles of event-driven programming. Implementing the <code>EventEmitter</code> class will deepen your understanding of these concepts, which are pivotal in modern JavaScript development.</p>
+
+<hr/>
+<p><strong>Question 60:</strong></p>
+<p>You are tasked with building an <code>EventTarget</code> class in JavaScript, structured to efficiently handle events. This class is fundamental for registering event listeners, removing these listeners, and dispatching events to the registered listeners.</p>
+<p>The <code>EventTarget</code> class should encapsulate three primary methods:</p>
+<ul>
+<li><strong>addEventListener(name, callback):</strong> Utilized to register event listeners. Whenever an event with the specified name is dispatched, the corresponding callback functions are invoked. This method should prevent the addition of duplicate callback functions for the same event.</li>
+<li><strong>removeEventListener(name, callback):</strong> Employed to deregister a previously added event listener. If the specified callback is located within the event&#8217;s callback list, it should be removed. Should the callback list become empty as a result, the event should be completely removed from the class&#8217;s registry.</li>
+<li><strong>dispatchEvent(name):</strong> Used to trigger events. It executes all callback functions associated with the provided event name.</li>
+</ul>
+<p><strong>Example Usage:</strong></p>
+<pre><code>const et = new EventTarget();
+et.addEventListener('click', () => console.log('Clicked!'));
+et.dispatchEvent('click'); // Output: "Clicked!"
+et.removeEventListener('click', () => console.log('Clicked!'));
+et.dispatchEvent('click'); // No output, as the listener has been removed.</code></pre>
+<p>This <code>EventTarget</code> implementation offers a streamlined and adaptable approach to managing events within event-driven programming paradigms, allowing for the dynamic addition and removal of event handlers and the capability to programmatically initiate events.</p>
+
+<hr/>
+<p><strong>Question 61:</strong></p>
+<p>You are tasked with creating custom implementations of three essential methods found in the Function prototype: <code>myCall</code>, <code>myApply</code>, and <code>myBind</code>. These methods are designed to emulate the functionality of JavaScript&#8217;s native <code>Function.prototype.call</code>, <code>Function.prototype.apply</code>, and <code>Function.prototype.bind</code> methods, respectively. This challenge provides a deep dive into handling function context (`this`) and arguments in JavaScript, which is crucial for function execution and object-oriented programming.</p>
+<p>The <code>myCall</code> method should enable a function to be invoked with a specified `this` context and individual arguments, mirroring the behavior of <code>Function.prototype.call</code>. The <code>myApply</code> method, on the other hand, should allow a function to be called with an array of arguments, akin to <code>Function.prototype.apply</code>. Finally, the <code>myBind</code> method is expected to return a new function that, when called at a later time, will have its `this` context and initial arguments preset, resembling <code>Function.prototype.bind</code>.</p>
+<p>Implementing these custom methods not only showcases the flexibility and dynamism of JavaScript but also serves as a valuable exercise in understanding the core mechanics of function execution and context binding. By crafting <code>myCall</code>, <code>myApply</code>, and <code>myBind</code> from the ground up, you will gain a deeper insight into these fundamental aspects of JavaScript and enhance your problem-solving skills for various programming challenges.</p>
+
+<hr/>
+<p><strong>Question 62:</strong></p>
+<p>Implement an <code>EventEmitter</code> class in JavaScript that allows for subscribing to events, emitting events, and unsubscribing from events. This problem is categorized as medium difficulty and is commonly encountered in interviews for companies like Meta. Understanding event handling and the observer pattern is crucial for frontend developers, making this challenge both relevant and instructive.</p>
+<p>The <code>EventEmitter</code> class should have the following functionalities:</p>
+<ul>
+<li><strong>on(name, callback):</strong> Registers an event listener for the specified event <code>name</code>. This method should return an object with an <code>off</code> method, which when called, removes the listener.</li>
+<li><strong>emit(name, &#8230;args):</strong> Triggers the specified event <code>name</code> and calls all the registered callbacks with the provided arguments.</li>
+</ul>
+<p>Your implementation should allow for the dynamic addition and removal of event listeners, ensuring that event callbacks are executed in the order they were added. The <code>emit</code> method should return <code>true</code> if the event has listeners and was successfully emitted, or <code>false</code> otherwise.</p>
+<p>Example usage:</p>
+<pre><code>const emitter = new EventEmitter();
+var sum = 0;
+function addTwoNumbers(a, b) {
+  sum = a + b;
+}
+const sub = emitter.on('foo', addTwoNumbers);
+emitter.emit('foo', 2, 5); // Triggers addTwoNumbers, expecting sum = 7
+console.log(sum); // Output: 7
+
+sub.off(); // Unsubscribe the addTwoNumbers listener from 'foo' event
+emitter.emit('foo', -3, 9); // Since addTwoNumbers is unsubscribed, sum remains unchanged
+console.log(sum); // Output: 7</code></pre>
+<p>This task assesses your ability to work with classes, callbacks, and advanced JavaScript concepts such as closures and the observer pattern. Successfully implementing an <code>EventEmitter</code> demonstrates a deep understanding of event-driven programming, a key aspect of many JavaScript applications.</p>
+
+<hr/>
+<p><strong>Question 63:</strong></p>
+<p>This problem extends the concept of throttling function executions, introducing an improved version of the <code>throttle()</code> function. The enhanced <code>throttle()</code> function now accepts an additional third parameter: an options object. This object includes two boolean properties: <code>leading</code> and <code>trailing</code>. The <code>leading</code> property decides if the throttled function should be invoked at the start or after a delay, while the <code>trailing</code> property controls whether the function should be called after the delay concludes or right away.</p>
+<p>The primary objective is to design a throttling function that can limit the execution rate of a given function. Unlike the basic implementation from the previous problem, this version grants more control over the throttled function&#8217;s behavior, allowing for a more tailored functionality.</p>
+<p>To illustrate, consider the following examples which demonstrate how the options object influences the throttling:</p>
+<ul>
+<li>With <code>{ leading: true, trailing: false }</code>, the function will execute immediately on the first call, then ignore all calls during the wait time.</li>
+<li>With <code>{ leading: false, trailing: true }</code>, the function will ignore the initial call, then execute at the end of the wait time, applying the last arguments passed during the wait.</li>
+<li>When both are true or both are false, the function&#8217;s behavior adjusts accordingly, offering various execution strategies that can be customized as needed.</li>
+</ul>
+<p>To verify the correctness of your <code>throttle()</code> function, a test function named <code>run()</code> is provided. It simulates function calls, capturing their timing, and utilizes <code>setTimeout()</code> to manage execution based on the specified delay and options. The outcome is an array of strings that represent the executed function calls and their respective timings.</p>
+<p>Given this setup, your task is to implement the improved <code>throttle()</code> function. Ensure that it adheres to the specified behavior, taking into account the leading and trailing options, and that it functions accurately even in the complex browser environment where <code>setTimeout()</code> and <code>clearTimeout()</code> might not always be precise.</p>
+
+<hr/>
+<p><strong>Question 64:</strong></p>
+<p>The goal is to implement an advanced version of the <code>debounce()</code> function in JavaScript, which introduces an <code>options</code> parameter. This parameter contains two properties: <code>leading</code> and <code>trailing</code>, both of which are boolean flags.</p>
+<p>The <code>leading</code> flag determines if the debounced function should execute immediately on the first call. When <code>true</code>, the function triggers right away; otherwise, it waits for the specified delay. The <code>trailing</code> flag, on the other hand, controls the execution of the function after the delay. If <code>true</code>, the function executes after the delay; if <code>false</code>, it does not.</p>
+<p>By default, the debounce function behaves traditionally, with <code>{leading: false, trailing: true}</code>. This task involves creating a debounce mechanism that adapts to these options, providing flexibility in function execution timing. This adaptation is crucial for optimizing event handling and response strategies in various scenarios.</p>
+<p><strong>Example:</strong> Consider a sequence of function calls with corresponding delays. The enhanced debounced function should execute these calls based on the configured <code>leading</code> and <code>trailing</code> options, potentially reducing the number of invocations for efficiency.</p>
+<p>Note: In testing environments, especially browsers, the accuracy of <code>setTimeout()</code> and <code>clearTimeout()</code> might not be reliable. Thus, alternative implementations should be considered for evaluating the debounced function&#8217;s behavior.</p>
+
+<hr/>
+<p><strong>Question 65:</strong></p>
+<p>Implement a JavaScript utility called <code>debounce</code> that enhances the control over function executions in response to rapid or repeated triggers. This utility should accept two parameters: a target function (<code>func</code>) and a wait time in milliseconds (<code>wait</code>). The <code>debounce</code> function returns a new, debounced version of the target function that ensures it is only executed after the specified wait time has elapsed since its last invocation.</p>
+<p>If the debounced function is called again before the wait time has expired, the countdown is reset, delaying the function&#8217;s execution until the wait time passes without any further invocations. This behavior is crucial in scenarios such as handling rapid user inputs, window resizing, or scroll events, where controlling the rate of function execution can significantly enhance performance and user experience.</p>
+<p>In addition to the basic debouncing behavior, the returned function includes two methods for added flexibility:</p>
+<ul>
+<li><strong>cancel():</strong> Cancels any scheduled execution of the debounced function, effectively resetting the debounce mechanism.</li>
+<li><strong>flush():</strong> Immediately invokes the debounced function if there is a scheduled execution pending, bypassing the wait time.</li>
+</ul>
+<p>This advanced debouncing mechanism, with its <code>cancel</code> and <code>flush</code> capabilities, provides a powerful tool for optimizing dynamic function execution in response to user actions or system events.</p>
+
+<hr/>
+<p><strong>Question 66:</strong></p>
+<p>JavaScript arrays come with a set of powerful built-in methods like <code>map()</code>, <code>filter()</code>, and <code>reduce()</code> that are essential for manipulating array elements. The task is to recreate these methods, named <code>myMap()</code>, <code>myFilter()</code>, and <code>myReduce()</code>, by adding them to the <code>Array.prototype</code>. These custom methods should mimic the functionality of their native counterparts, enabling similar operations on arrays without using the built-in methods.</p>
+<p>Here is a brief overview of what each method should accomplish:</p>
+<ul>
+<li><strong>myMap(callback):</strong> This method should create a new array populated with the results of calling a provided function on every element in the calling array.</li>
+<li><strong>myFilter(callback):</strong> It should create a new array with all elements that pass the test implemented by the provided function.</li>
+<li><strong>myReduce(callback, initialValue):</strong> This method applies a function against an accumulator and each element in the array (from left to right) to reduce it to a single value, starting from <code>initialValue</code> if provided.</li>
+</ul>
+<p>These custom methods are not only a great way to understand how JavaScript&#8217;s built-in array methods work under the hood but also serve as an excellent exercise in enhancing one&#8217;s ability to extend native JavaScript objects in a meaningful way.</p>
+
+<hr/>
+<p><strong>Question 67:</strong></p>
+<p>Implement a <code>deepEquals</code> function capable of comparing two inputs, which can vary widely in type and structure, including null, undefined, objects, arrays, NaN, and primitives (such as numbers, strings, and booleans). The function should accurately determine whether the two inputs are deeply equal, meaning they are structurally identical and contain the same values at every level of nesting.</p>
+<p>The challenge lies in handling the nuanced differences between JavaScript data types and their comparisons. For instance:</p>
+<ul>
+<li>Comparing <code>NaN</code> values, which by default are not equal to themselves.</li>
+<li>Distinguishing between different types of falsy values, such as <code>null</code> and <code>undefined</code>.</li>
+<li>Ensuring that arrays and objects are compared recursively, delving into each element or property to verify equality.</li>
+<li>Correctly handling primitive data types, ensuring strict equality.</li>
+</ul>
+<p>Examples of expected behavior:</p>
+<pre><code>deepEquals(NaN, NaN) // true
+deepEquals([1, 2, [3]], [1, 2, [3]]) // true
+deepEquals({ a: 1, b: { c: 2 } }, { a: 1, b: { c: 2 } }) // true
+deepEquals(null, undefined) // false
+deepEquals([1, 2, 3], { 0: 1, 1: 2, 2: 3 }) // false</code></pre>
+<p>This function is not only a powerful tool for JavaScript developers to accurately compare complex structures but also serves as an excellent exercise in understanding JavaScript&#8217;s type coercion and equality comparisons.</p>
+
+<hr/>
+<p><strong>Question 68:</strong></p>
+<p>Write a function named <code>flatten</code> that is capable of taking an input which may be an arbitrarily nested object or array, and return a flattened version of it. In the flattened output, all elements from nested arrays should be in a single-level array, and all nested object properties should be brought to the top level of a single object.</p>
+<p>The challenge involves creating a versatile function that can handle various types of nested structures, including combinations of arrays and objects, without losing any data in the process. The function should be able to distinguish between objects and arrays and treat them accordingly, ensuring that arrays are merged into a single array and object properties are collated into a single object.</p>
+<p>Consider the following examples to understand the expected behavior of the function:</p>
+<ul>
+<li>Given an array like <code>[1, [2, 3], [[4, 5], 6]]</code>, the function should produce <code>[1, 2, 3, 4, 5, 6]</code>.</li>
+<li>For an object such as <code>{ a: 1, b: { c: 2, d: { e: 3 } } }</code>, the expected output is <code>{ a: 1, c: 2, e: 3 }</code>.</li>
+<li>When the input is a mix of arrays and objects like <code>[1, { a: 2, b: [3, 4] }, [5, { c: 6 }]]</code>, the function should return <code>[1, 2, 3, 4, 5, 6]</code>.</li>
+<li>For deeply nested arrays such as <code>[[[[[[[[[[1]]]]]]]]]]</code>, the output should simply be <code>[1]</code>.</li>
+<li>When the input is <code>null</code>, the function should return <code>null</code>.</li>
+</ul>
+<p>Your task is to implement the <code>flatten</code> function in such a way that it fulfills the above requirements, providing a simple and efficient solution to the problem of dealing with complex, nested data structures. This is a common challenge that developers face, making it a valuable exercise for enhancing your problem-solving skills and understanding of data manipulation.</p>
+
+<hr/>
+<p><strong>Question 69:</strong></p>
+<p>Given a nested JSON structure, the task is to create two utility functions and one primary function to efficiently process and flatten the structure asynchronously. The functions to be implemented are:</p>
+<ol>
+<li><strong>getBatch:</strong> This function asynchronously retrieves an item from the input array based on a specified index. It returns a Promise that resolves to the item, facilitating asynchronous item processing. This is particularly useful for handling large datasets without impeding the execution flow.</li>
+<li><strong>getValueList:</strong> An asynchronous function that utilizes <code>getBatch</code> to fetch items within a specified range (fromIndex to toIndex). It aims to flatten these items into a single-level array of values while preserving the original order found in the nested structure.</li>
+</ol>
+<p>The primary challenge lies in the efficient management of asynchronous operations coupled with the maintenance of the correct order of values in the flattened structure.</p>
+<p><strong>Example Use Case:</strong> Consider the following input structure, which represents a simplified hierarchical data model akin to a file system or a comment thread, where each item can contain children:</p>
+<pre><code>[
+  {
+    "value": "value0",
+    "children": []
+  },
+  {
+    "value": "value1",
+    "children": [
+      {
+        "value": "value2",
+        "children": [
+          {
+            "value": "value3",
+            "children": []
+          }
+        ]
+      },
+      {
+        "value": "value4",
+        "children": []
+      }
+    ]
+  },
+  {
+    "value": "value5",
+    "children": []
+  },
+  {
+    "value": "value6",
+    "children": []
+  }
+]</code></pre>
+<p>The objective is to flatten this structure into a single-level array of values [<code>"value0", "value1", "value2", "value3", "value4", "value5", "value6"</code>], using asynchronous functions to fetch and process the data efficiently.</p>
+
+<hr/>
+<p><strong>Question 70:</strong></p>
+<p>Developing a frontend application often involves dealing with complex data structures, particularly when displaying hierarchical lists of items where each item can potentially have children, forming a nested structure. However, for certain UI components or data processing tasks, a flat list representation of these items, preserving their inherent relationships, is more desirable.</p>
+<p>Your challenge is to implement a function that accepts a nested structure of items as input and returns a flattened array of objects. Each object in the output array should represent an item from the nested structure, stripped of its nesting but retaining the original order of items.</p>
+<p>Consider the following input examples to understand the expected behavior:</p>
+<ul>
+<li><strong>Input Example 1:</strong></li>
+</ul>
+<pre><code>const input1 = [
+  {
+    "value": "value0",
+    "children": []
+  },
+  // ... other items ...
+];</code></pre>
+<ul>
+<li><strong>Expected Output for Example 1:</strong></li>
+</ul>
+<pre><code>const output1 = [
+  { "value": "value0" },
+  // ... other items ...
+];</code></pre>
+<ul>
+<li><strong>Input Example 2:</strong></li>
+</ul>
+<pre><code>const input2 = [
+  {
+    "value": "value1",
+    "children": [
+      {
+        "value": "value2",
+        "children": [
+          {
+            "value": "value3",
+            "children": []
+          }
+        ]
+      },
+      {
+        "value": "value4",
+        "children": []
+      }
+    ]
+  },
+  // ... other items ...
+];</code></pre>
+<ul>
+<li><strong>Expected Output for Example 2:</strong></li>
+</ul>
+<pre><code>const output2 = [
+  { "value": "value1" },
+  { "value": "value2" },
+  { "value": "value3" },
+  { "value": "value4" },
+  // ... other items ...
+];</code></pre>
+<p>This task assesses your ability to manipulate complex data structures and simplify them for practical usage in frontend applications. Successfully implementing this function will enhance your skills in data manipulation, recursion (if applicable), and algorithmic thinking.</p>
+
+<hr/>
+<p><strong>Question 71:</strong></p>
+<p>Write a function to flatten a multi-dimensional object into a single-level object. The function should take an object as input and return a new object where all nested objects are flattened, retaining their key-value pairs at the top level. Each key in the output object should be unique, and the corresponding value should reflect the nested structure of the input object. This task involves recursively exploring each property within the object and aggregating all properties at the root level. Consider the following examples to better understand the expected behavior:</p>
+<ul>
+<li><strong>Input:</strong> <code>{ a: 1, b: { c: 2, d: 3, e: { f: null } }, g: 4, h: undefined }</code><br />
+    <strong>Output:</strong> <code>{ a: 1, c: 2, d: 3, f: null, g: 4, h: undefined }</code></li>
+<li><strong>Input:</strong> <code>{ a: { b: { c: 1 }, d: { e: 2, f: 3 } } }</code><br />
+    <strong>Output:</strong> <code>{ c: 1, e: 2, f: 3 }</code></li>
+<li><strong>Input:</strong> <code>{ a: { b: { c: { d: { e: 1 } } } } }</code><br />
+    <strong>Output:</strong> <code>{ e: 1 }</code></li>
+</ul>
+<p>The function must ensure that if a key has a value of <code>null</code> or <code>undefined</code>, it should still be included in the output object. This challenge tests your ability to manipulate object properties and recursively process nested structures, which is a common task in handling JSON data and configuring component states in frontend development.</p>
+
+<hr/>
+<p><strong>Question 72:</strong></p>
+<p>Implement a function <code>deepClone</code> that takes an object as input and returns a deep copy of it. Unlike a shallow copy, which only copies the outermost layer, a deep copy replicates every level of nested objects. This means that changes made to the nested objects in the cloned object do not affect the original object.</p>
+<p>This function is crucial in scenarios where you need to manipulate data while preserving the original structure for future use. Deep cloning is a common requirement in frontend development, especially in state management, where immutability is a key concept.</p>
+<p>Consider the following object as an example:</p>
+<pre><code>const source = {
+    a: 10,
+    b: 20,
+    c: {
+        d: 30,
+        e: ['a', 'b', 1],
+        f: {
+            g: 1
+        }
+    }
+}</code></pre>
+<p>Your task is to create a <code>deepClone</code> function that accurately duplicates this structure, including all nested objects and arrays. Changes to any level of the cloned object should not impact the original object.</p>
+<p>Here&#8217;s a basic usage example where changes to the cloned object do not affect the original:</p>
+<pre><code>const obj = { role: 'foo' };
+const clonedObj = deepClone(obj);
+clonedObj.role = 'bar';
+console.log(obj.role); // Output: 'foo'
+console.log(clonedObj.role); // Output: 'bar'</code></pre>
+<p>The challenge involves understanding and applying recursion for objects within objects, ensuring each level is appropriately cloned.</p>
+<p>This problem tests your ability to work with references in JavaScript, a fundamental concept in ensuring data integrity and preventing unintended side effects in your applications.</p>
+
+<hr/>
+<p><strong>Question 73:</strong></p>
+<p><img loading="lazy" decoding="async" class="alignnone size-full wp-image-1271" src="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-04-17-at-9.31.01-AM.png" alt="" width="449" height="176" srcset="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-04-17-at-9.31.01-AM.png 449w, https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-04-17-at-9.31.01-AM-300x118.png 300w" sizes="(max-width: 449px) 100vw, 449px" /></p>
+<p>You are tasked with developing a phone number parser component using React, focusing on dynamically formatting and validating user inputs. This parser transcends mere data format assurance; it enhances user experience and data integrity in web applications that necessitate phone number inputs.</p>
+<h3>Core Functionality</h3>
+<p>The parser will feature a <code>Form</code> component for user input. As users type, the input field will automatically format the numbers into a readable format (e.g., <code>(123) 456-7890</code>), providing immediate feedback crucial for usability and allowing users to correct mistakes in real-time.</p>
+<h3>Validation and Error Handling</h3>
+<p>In addition to formatting, the parser will incorporate validation logic to confirm inputs adhere to a standard 10-digit phone number format, crucial for backend processing and frontend consistency, thus mitigating the risk of invalid data submissions.</p>
+<h3>User Interactions</h3>
+<p>The component will adeptly manage various user interactions. For example, when a user attempts to copy the phone number, only the digits (excluding formatting characters) will be copied to the clipboard, ensuring phone numbers are usable in diverse contexts without necessitating additional formatting.</p>
+<h3>Technical Approach</h3>
+<p>React&#8217;s <code>useState</code> and <code>useEffect</code> hooks will be employed for state management and side effects, respectively. Functions like <code>cleanNumber</code> will strip out non-numeric characters for consistent storage, while <code>formatPhoneNumber</code> will enhance displayed value readability.</p>
+<h3>Validation Workflow</h3>
+<p>The <code>validateInput</code> function will encapsulate validation logic, checking for completeness and format correctness, thus maintaining form integrity and guiding user inputs.</p>
+
+<hr/>
+<p><strong>Question 74:</strong></p>
+<p>You are tasked with building a simple stream subscription system in JavaScript, encapsulated within a Stream class. This class should enable users to subscribe to the stream and receive updates whenever new data is pushed into it, allowing for real-time data processing and manipulation.</p>
+<p>The Stream class should be designed with the following functionalities:</p>
+<ul>
+<li><strong>Subscriptions:</strong> Users can subscribe to the stream by providing a callback function. This function should be invoked with the new data as its argument whenever the stream is updated.</li>
+<li><strong>Data Pushing:</strong> The class should provide a method to push new data into the stream. Upon pushing new data, all subscribed callback functions should be executed with the newly pushed data, enabling subscribers to react to updates in real-time.</li>
+</ul>
+<p>Here&#8217;s a simple usage example demonstrating both subscription and data pushing:</p>
+<pre><code>
+// Creating a new instance of the Stream class
+const myStream = new Stream();
+
+// Subscribing to the stream with a callback function
+myStream.subscribe(data => console.log(`Received data: ${data}`));
+
+// Pushing new data into the stream, triggering subscribed callbacks
+myStream.push('Hello, world!');
+// Output: "Received data: Hello, world!"
+</code></pre>
+<p>This implementation facilitates a versatile mechanism for handling real-time data streams, allowing multiple consumers to process and react to new data as it becomes available. Whether for handling event streams, processing live data feeds, or implementing observer patterns, the Stream class provides a foundational structure for these scenarios.</p>
+<p>As you delve into building this stream subscription system, consider the aspects of data flow, subscriber management, and the efficiency of data dissemination among multiple subscribers.</p>
+
+<hr/>
+<p><strong>Question 75:</strong></p>
+<p>The <code>querySelectorAll</code> method is an essential tool in web development, enabling developers to select elements from the DOM (Document Object Model) that match specific CSS selectors. This method simplifies the process of manipulating HTML documents by allowing for the selection of elements based on class names, IDs, attributes, and more, mirroring the flexibility of CSS.</p>
+<p>In this exercise, we aim to create a simplified version of <code>querySelectorAll</code>. This custom function, <code>querySelectorAll</code>, will be designed to traverse the DOM tree and collect elements that match a given CSS selector. The function will begin its search from a specified node (defaulting to the document&#8217;s root) and explore child nodes recursively to find matches.</p>
+<h3>Function Signature</h3>
+<p>Our simplified <code>querySelectorAll</code> function has the following signature:</p>
+<pre><code>function querySelectorAll(selector, node = document)</code></pre>
+<ul>
+<li><code>selector</code>: A string representing the CSS selector to match against.</li>
+<li><code>node</code>: The root node from where the search should start. It defaults to the document if not provided.</li>
+</ul>
+<h3>Implementation Details</h3>
+<p>The function works by recursively traversing the DOM tree from the given node, checking each node against the provided CSS selector. If a node matches the selector, it is added to an array of elements. This array is eventually returned, containing all elements that matched the selector.</p>
+<p>Here&#8217;s a step-by-step breakdown of the function&#8217;s logic:</p>
+<ol>
+<li>Initialize an empty array <code>elements</code> to store the matching elements.</li>
+<li>Define a <code>traverse</code> function that will recursively explore each node in the DOM tree.
+<ul>
+<li>If the current node matches the provided CSS selector (using the <code>matches</code> method), it is added to the <code>elements</code> array.</li>
+<li>The <code>traverse</code> function is then called on each child node of the current node, allowing the function to search deeper into the DOM tree.</li>
+</ul>
+</li>
+<li>The <code>traverse</code> function is initially called with the starting node, kicking off the recursive search.</li>
+<li>Once the entire tree has been explored, the <code>elements</code> array, now potentially populated with matching elements, is returned.</li>
+</ol>
+<h3>Usage Examples</h3>
+<p>The custom <code>querySelectorAll</code> function can be used in various scenarios, similar to the native method. Here are some examples:</p>
+<ul>
+<li>To select all paragraph (<code>&lt;p&gt;</code>) elements within the document:
+<pre><code>const paragraphs = querySelectorAll('p');</code></pre>
+</li>
+<li>To find all <code>&lt;div&gt;</code> elements within a specific container:
+<pre><code>const container = document.getElementById('container');
+const divsInContainer = querySelectorAll('div', container);</code></pre>
+</li>
+<li>To locate elements with a specific class within a container:
+<pre><code>const elementsWithClass = querySelectorAll('.my-class', container);</code></pre>
+</li>
+</ul>
+<h3>Limitations and Considerations</h3>
+<p>While our simplified <code>querySelectorAll</code> function demonstrates the core concept of DOM traversal and element selection, it is not as optimized or feature-rich as the native implementation. The actual <code>querySelectorAll</code> method provided by browsers supports a wide range of CSS selectors and includes optimizations for performance. Therefore, our function serves as an educational tool to understand the underlying principles rather than a replacement for the native method.</p>
+<p>By building and understanding this simplified version of <code>querySelectorAll</code>, developers can gain insights into how DOM traversal works and how elements are programmatically selected and manipulated in web development.</p>
+
+<hr/>
+<p><strong>Question 76:</strong></p>
+<article>
+<h2>Flatten with Depth</h2>
+<p>Implement a function to flatten a multi-level nested array up to a specified depth. The function should accept two arguments: the array to be flattened (<code>arr</code>) and the depth of flattening (<code>depth</code>). This challenge should be tackled using both recursive and iterative approaches to offer different strategies for achieving the same outcome.</p>
+<h3>Recursive Solution:</h3>
+<p>The recursive approach involves a function that calls itself to flatten each level of nested arrays until the specified depth is reached. If the current item is an array and the depth has not been exceeded, the function recursively flattens this item and concatenates the result. If the item is not an array or the depth has been exceeded, it is added directly to the result. This approach elegantly handles nested arrays by leveraging the call stack, but it&#8217;s essential to manage the depth to avoid excessive recursion that can lead to a stack overflow.</p>
+<h3>Iterative Solution:</h3>
+<p>The iterative approach uses a stack to manage the array items. Each item from the input array is processed: if it&#8217;s an array and the depth allows, its items are added to the stack to be processed; otherwise, the item is added to the results. This method iteratively deconstructs the nested arrays without recursion, making it robust for deeply nested structures but potentially more complex to implement and understand.</p>
+<h3>Example Usage:</h3>
+<p>Consider an array <code>[1, [2, [3, [4, 5]]], 6]</code> with a depth of 2. The expected output would be <code>[1, 2, 3, [4, 5], 6]</code>, flattening the array up to two levels deep but leaving any further nesting intact.</p>
+<p>This problem tests your ability to manipulate arrays, handle recursion, and implement iterative solutions, all crucial skills for a frontend developer.</p>
+</article>
+
+<hr/>
+<p><strong>Question 77:</strong></p>
+<p>You are tasked with implementing a <code>debounce</code> function in JavaScript, an essential technique in improving the performance of web applications by limiting the rate at which a function is executed. This function is particularly useful in scenarios where some code should not run until after a certain amount of time has elapsed since the last time it was invoked, such as during window resizing, scrolling, or real-time form validation.</p>
+<h3>Functionality Requirements:</h3>
+<p>The <code>debounce</code> function should accept a callback function, a delay in milliseconds, and an optional boolean parameter <code>immediate</code>. It returns a new function that, when invoked repeatedly, will only execute the callback after the specified delay has passed since the last invocation. If the <code>immediate</code> parameter is set to <code>true</code>, the callback should be executed immediately on the first call, but subsequent calls should be debounced until there is a pause in invocation for at least the delay period.</p>
+<h3>Behavioral Specifications:</h3>
+<ul>
+<li>If <code>immediate</code> is <code>false</code> (default), the callback is executed after the delay period if no subsequent calls are made within that delay.</li>
+<li>If <code>immediate</code> is <code>true</code>, the callback is executed immediately on the first call, but subsequent calls are debounced until the delay period has elapsed without any new calls.</li>
+</ul>
+<h3>Technical Considerations:</h3>
+<p>Use a timer to track the delay period and ensure that the callback function&#8217;s execution is postponed until the delay passes without any new invocation of the returned function. Carefully manage the timer to handle immediate execution logic and reset the timer as needed to ensure correct function behavior.</p>
+<p>This implementation of the <code>debounce</code> function will enhance your application&#8217;s responsiveness and efficiency by preventing code from executing too frequently under rapid event firing, such as typing in a search input or resizing a window.</p>
+
+<hr/>
+<p><strong>Question 78:</strong></p>
+<p>In this challenge, you are tasked with creating a <code>throttle</code> function, a fundamental concept in optimizing web applications by controlling the rate at which a function is executed. This mechanism is particularly beneficial for handling events that fire at a high frequency, such as scrolling or resizing, ensuring that the event handler doesn&#8217;t get called more often than is necessary for a smooth user experience.</p>
+<h3>Function Requirements:</h3>
+<p>The <code>throttle</code> function should accept a callback function and a delay time in milliseconds as parameters. It must return a new function, called <code>throttler</code>, that, when invoked, ensures the callback function is executed at most once in the specified delay period.</p>
+<h3>Behavioral Specifications:</h3>
+<ul>
+<li>The <code>throttler</code> function calculates the time elapsed since the last callback execution and decides whether to execute the callback immediately or after the remaining delay.</li>
+<li>If the elapsed time is less than the specified delay, the <code>throttler</code> function postpones the callback execution until the full delay period has passed since the last execution.</li>
+<li>The <code>throttler</code> function also provides a <code>cancel</code> method to cancel any scheduled callback execution, enhancing control over the throttling behavior.</li>
+</ul>
+<h3>Technical Approach:</h3>
+<p>Implement the <code>throttle</code> function using closure to maintain the state between invocations, such as the last call time and any pending timer. This approach ensures that the callback is not executed more frequently than the specified delay, regardless of how often the <code>throttler</code> function is called.</p>
+<p>By integrating the <code>throttle</code> function into your application, you can significantly improve performance and user experience by reducing the frequency of heavy computations or DOM manipulations in response to rapid, high-frequency events.</p>
+
+<hr/>
+<p><strong>Question 79:</strong></p>
+<p>You are tasked with developing a function capable of selecting and filtering gym session data based on specific options. Each session is detailed within an array of objects, highlighting the user, duration of the exercise, and the equipment utilized. A crucial feature of this function is its ability to consolidate sessions by the same user, thereby amalgamating their total exercise duration and equipment used.</p>
+<p><strong>Input:</strong></p>
+<ul>
+<li><code>sessions</code>: An array of session objects, each containing <code>user</code>, <code>duration</code>, and <code>equipment</code> properties.</li>
+<li><code>options</code>: An object hosting filtering and merging preferences.</li>
+</ul>
+<p><strong>Output:</strong></p>
+<p>An array of session objects tailored according to the specified options, inclusive of user-merged data if indicated.</p>
+<p><strong>Example:</strong></p>
+<pre><code>const input = [
+  { user: 'User1', duration: 30, equipment: ['treadmill'] },
+  { user: 'User2', duration: 45, equipment: ['bike', 'dumbbell'] },
+  // additional session objects
+];
+const options = { merge: true, equipment: ['bike'] };
+const selectedSessions = selectData(input, options);
+console.log(selectedSessions);
+// Output might resemble:
+// [
+// { user: 'User2', duration: 45, equipment: ['bike', 'dumbbell'] }
+// ]
+</code></pre>
+<p>This function not only demands adeptness in data filtering based on criteria but also challenges you to thoughtfully combine data from multiple entries pertaining to the same individual, ensuring a seamless and informative summary of gym sessions.</p>
+
+<hr/>
+<p><strong>Question 80:</strong></p>
+<p>You are given an array of skill endorsements, where each endorsement is represented by an object that includes a skill and the user who endorsed it. Your task is to write a function, <code>aggregateSkillEndorsements</code>, that processes this array and produces a summary for each skill.</p>
+<p>This summary should include the skill name, an array of users who have endorsed the skill, and the total count of endorsements the skill has received. The primary challenge lies in efficiently aggregating this information from a potentially large and unorganized list of endorsements.</p>
+<p><strong>Input:</strong> An array of endorsement objects, where each object has <code>skill</code> and <code>user</code> properties.</p>
+<p><strong>Output:</strong> An array of objects, each representing a skill summary that contains the skill name, an array of unique users who endorsed it, and the total count of endorsements for that skill.</p>
+<p><strong>Example:</strong></p>
+<pre><code>const endorsements = [
+  { skill: 'css', user: 'Bill' },
+  { skill: 'javascript', user: 'Chad' },
+  { skill: 'javascript', user: 'Bill' },
+  { skill: 'css', user: 'Sue' },
+  { skill: 'javascript', user: 'Sue' },
+  { skill: 'html', user: 'Sue' }
+];
+
+const skillSummaries = aggregateSkillEndorsements(endorsements);
+
+// Output:
+// [
+//   { skill: 'javascript', users: ['Chad', 'Bill', 'Sue'], count: 3 },
+//   { skill: 'css', users: ['Bill', 'Sue'], count: 2 },
+//   { skill: 'html', users: ['Sue'], count: 1 }
+// ]
+</code></pre>
+<p>The function must efficiently traverse the endorsements array, grouping endorsements by skill while keeping track of the unique users and total count for each skill. This task tests your ability to manipulate and aggregate data from complex data structures, a common requirement in software development.</p>
+
+<hr/>
+<p><strong>Question 81:</strong></p>
+<p>You are tasked with implementing a function named <code>calculateTotalSalaries</code> that will navigate through a company&#8217;s hierarchical structure to calculate the cumulative sum of salaries for all employees. The company&#8217;s structure is depicted as a nested object, where each node can either be a department containing further sub-departments or an array of employees. Each employee is represented by an object containing their name and salary.</p>
+<p>The main challenge lies in efficiently traversing this nested structure, which may vary in depth and complexity across different companies, to aggregate all the salary values. This problem not only tests your ability to work with nested data structures but also assesses your recursive thinking and problem-solving skills.</p>
+<p><strong>Input:</strong> A nested object representing the company&#8217;s structure, where each department can contain sub-departments or an array of employees with their respective salaries.</p>
+<p><strong>Output:</strong> A single integer value representing the total sum of salaries of all employees across the entire company.</p>
+<p><strong>Example:</strong></p>
+<pre><code>const company = {
+  sales: [
+    { name: "John", salary: 1000 },
+    { name: "Alice", salary: 1600 }
+  ],
+  development: {
+    sites: [
+      { name: "Peter", salary: 2000 },
+      { name: "Alex", salary: 1800 }
+    ],
+    internals: [
+      { name: "Jack", salary: 1300 }
+    ]
+  }
+};
+const totalSalaries = calculateTotalSalaries(company);
+console.log(totalSalaries); // Output: 7700
+</code></pre>
+<p>In this example, the function <code>calculateTotalSalaries</code> navigates through each department and sub-department, summing up the salaries of &#8220;John&#8221;, &#8220;Alice&#8221;, &#8220;Peter&#8221;, &#8220;Alex&#8221;, and &#8220;Jack&#8221;, resulting in a total of 7700.</p>
+<p>This problem encapsulates a real-world scenario where understanding and manipulating nested data structures are crucial. It provides a foundation for more complex data processing tasks that are common in software development, especially in handling hierarchical data.</p>
+
+<hr/>
+<p><strong>Question 82:</strong></p>
+<h2>Flatten with Prefix</h2>
+<p>You are tasked with creating a function, <code>flattenWithPrefix</code>, that flattens a nested object. The challenge lies in ensuring that as the object is flattened, the keys in the resulting object are prefixed with their parent keys, joined by periods (&#8216;.&#8217;). This means that for every level of nesting within the original object, its key is concatenated with its parent key(s), creating a clear hierarchical representation of the original nested structure in the flattened object.</p>
+<p>This problem presents a common scenario in data manipulation, where nested structures need to be simplified for easier processing or storage, while still retaining a trace of their original hierarchical organization. Such a function can be particularly useful when dealing with configurations, translations, or any data that is naturally hierarchical but needs to be flattened for practical reasons.</p>
+<p><strong>Example Usage:</strong></p>
+<pre><code>Input: { a: { b: { c: 1 }, d: 2 } }
+Output: { "a.b.c": 1, "a.d": 2 }
+
+Input: { x: { y: 10, z: { w: 20 } } }
+Output: { "x.y": 10, "x.z.w": 20 }
+</code></pre>
+<p>In these examples, notice how each key in the output object is a string that represents the path to the corresponding value in the input object. The function essentially transforms the nested object into a &#8216;flat&#8217; object where each key-value pair is accessible at the top level, with keys indicating the original nested structure.</p>
+<p>Your implementation of <code>flattenWithPrefix</code> should work for objects of arbitrary depth and complexity, handling all the quirks of object iteration in JavaScript, such as inherited properties. The focus is not just on achieving the task but on writing clean, efficient, and maintainable code that could be integrated into larger codebases.</p>
+
+<hr/>
+<p><strong>Question 83:</strong></p>
+<p>You are tasked with creating a function that retrieves information about trending stocks based on their market capitalization and prices. The goal is to identify the top <code>n</code> trending stocks, where <code>n</code> is a specified number, and return details about these stocks in a structured format. The function should return an array of objects, each encapsulating the symbol, name, market capitalization, and current price of these trending stocks.</p>
+<p>The challenge involves fetching data from three different APIs: one for stock symbols and names, another for market capitalizations, and the last one for current stock prices. The process is to first fetch the symbols and market caps, sort the stocks by market cap in descending order, pick the top <code>n</code> stocks, and then fetch their current prices. Finally, the information is aggregated into a single array of objects that contain all the necessary details for each selected stock.</p>
+<h3>Example:</h3>
+<p>Consider you want to find the top 2 trending stocks. The function will sort all available stocks based on their market capitalization and return the details for the top 2.</p>
+<pre><code>Input: n = 2
+
+Output:
+[
+  { "symbol": "MMM", "name": "3M Company", "market-cap": 138721055226, "price": 1001.52 },
+  { "symbol": "ABT", "name": "Abbott Laboratories", "market-cap": 102121042306, "price": 1001.52 }
+]
+</code></pre>
+<p>The function encapsulates a complex process of asynchronous API calls, data sorting, and aggregation, presenting a streamlined solution to the user. This task not only tests your proficiency with asynchronous JavaScript operations but also your ability to work with external data sources and transform data to fit specific requirements.</p>
+<p>This challenge serves as an excellent real-world scenario for frontend developers, especially for those interested in financial technologies or stock market applications, providing both a technical challenge and an insight into financial data manipulation.</p>
+
+<hr/>
+<p><strong>Question 84:</strong></p>
+<p>You are presented with a task involving a dataset represented as an array of objects, where each object delineates a person&#8217;s attributes, such as name, company, position, and level. Additionally, there is a match object specifying criteria to identify matches based on specific attributes. Your challenge is to develop a function, <code>findMatches</code>, which filters the dataset to return only the objects that meet all the criteria outlined in the match object.</p>
+<p>The core objective is to write a program that, given the dataset and the match object, produces an array containing only the objects that satisfy all the criteria in the match object. For instance:</p>
+<p><strong>Input:</strong></p>
+<pre><code>data: [
+  { name: 'John', company: 'Google', position: 'Software Engineer', level: 'Entry' },
+  { name: 'Ann', company: 'Waymo', position: 'Product Manager', level: 'Entry' }
+]
+match: { position: 'Product Manager', level: 'Entry' }
+</code></pre>
+<p><strong>Output:</strong></p>
+<pre><code>[
+  { name: 'Ann', company: 'Waymo', position: 'Product Manager', level: 'Entry' }
+]
+</code></pre>
+<p>This exercise tests your ability to manipulate complex data structures and implement effective filtering algorithms, essential skills in data handling and software development. It involves traversing arrays, understanding object properties, and applying logical operations to achieve the desired outcome.</p>
+
+<hr/>
+<p><strong>Question 85:</strong></p>
+<p>Given two identical-structure DOM trees with differing text content, and a specified node in the first tree, your task is to implement a function to identify and return the corresponding node from the second tree. This problem tests your understanding of tree traversal and comparison techniques, making it essential for those interested in data structures and algorithms.</p>
+<p><img loading="lazy" decoding="async" class="alignnone size-medium wp-image-68" src="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-06-at-4.29.55-PM-300x213.png" alt="" width="300" height="213" srcset="https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-06-at-4.29.55-PM-300x213.png 300w, https://api.frontendlead.com/wp-content/uploads/2024/03/Screenshot-2024-03-06-at-4.29.55-PM.png 540w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+
+<hr/>
+<p><strong>Question 86:</strong></p>
+<p>Write a function to flatten a multi-dimensional array into a single-level array. Provide both recursive and iterative solutions.</p>
+<p>The problem involves transforming an array that contains nested arrays of various levels into a single-level array. For example, given an input like <code>[[1, 2, [3]], 4]</code>, the expected output would be <code>[1, 2, 3, 4]</code>. This challenge must be addressed in two distinct manners:</p>
+<ul>
+<li><strong>Recursive Approach:</strong> This method leverages the concept of recursion, where a function calls itself. When the function encounters an element that is an array, it calls itself with this nested array, accumulating all the elements into a single, flattened array. This approach elegantly navigates through the layers of nested arrays, extracting and combining elements into one cohesive structure.</li>
+<li><strong>Iterative Approach:</strong> Differing from recursion, the iterative solution utilizes a stack to manage and process the elements. This method iteratively examines each element, and when an array is encountered, its elements are added to the stack to be processed. This continues until all elements are flattened into a single array, ensuring efficient handling without the overhead of recursive function calls.</li>
+</ul>
+<p><strong>Example:</strong> Let&#8217;s illustrate the problem and solutions with a concrete example.</p>
+<pre><code>Input: [[1, 2, [3, [4, 5]]], 6]
+
+Recursive Output: [1, 2, 3, 4, 5, 6]
+Iterative Output: [1, 2, 3, 4, 5, 6]</code></pre>
+<p>This task not only tests your understanding of array manipulation but also evaluates your ability to implement solutions using different programming paradigms. Whether you opt for the elegance of recursion or the control of iteration, mastering this challenge will sharpen your problem-solving skills and prepare you for frontend interviews.</p>
+<p>As you embark on solving this problem, consider the implications of each approach, including the ease of implementation, efficiency, and potential limitations such as stack overflow in recursion for deeply nested arrays. Good luck!</p>
+
+<hr/>
+<p><strong>Question 87:</strong></p>
+<p class="mt-3">You are tasked with implementing a custom Promise class in JavaScript, mimicking the behavior of the native Promise. This includes handling asynchronous operations, chaining methods, and error management.</p>
+<p class="mt-3">Your implementation should support the basic promise methods: <code>then</code>, <code>catch</code>, and the constructor should take an executor function with <code>resolve</code> and <code>reject</code> parameters.</p>
+<p>Here&#8217;s an example of how your custom Promise might be used:</p>
+<pre><code>const promise = new MyPromise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; resolve("Success!"), 1000);
+});
+promise.then(value =&gt; console.log(value));</code></pre>
+<p>Please make sure to include a method called <code>getState()</code> that returns the STATE to pass all unit tests.</p>
+
+</body>
+</html>
